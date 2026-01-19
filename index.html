@@ -16,36 +16,40 @@
   <style>
     :root {
       /* Sea / blue-grey palette */
-      --bg-deep: #07131b;       /* deep navy */
-      --bg-deeper: #04090d;     /* near-black */
-      --bg-mid: #1a3a4a;        /* blue-grey */
-      --accent: #7fb3d5;        /* soft sea blue */
-      --accent-2: #5f93b6;      /* deeper accent */
-      --accent-soft: #b9d7e8;   /* lighter accent */
-      --text-main: #f5f7fa;     /* almost white */
-      --text-muted: #b3c0cc;    /* muted grey */
+      --bg-deep: #07131b;
+      --bg-deeper: #04090d;
+      --bg-mid: #1a3a4a;
+      --accent: #7fb3d5;
+      --accent-2: #5f93b6;
+      --accent-soft: #b9d7e8;
+      --text-main: #f5f7fa;
+      --text-muted: #b3c0cc;
+
       --card-bg: rgba(8, 18, 26, 0.82);
       --border-soft: rgba(255, 255, 255, 0.07);
       --shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.50);
+
+      --radius-md: 16px;
       --radius-lg: 22px;
       --radius-xl: 28px;
       --radius-pill: 999px;
+
+      --maxw: 1120px;
+      --content-max: 820px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text-main);
       background: radial-gradient(circle at top left, #274863 0, var(--bg-deep) 55%, var(--bg-deeper) 100%);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 34px 16px;
+      padding: 34px 16px 54px;
     }
 
-    .page { max-width: 1040px; width: 100%; }
+    .page { max-width: var(--maxw); margin: 0 auto; width: 100%; }
 
     .hero {
       position: relative;
@@ -54,7 +58,7 @@
       padding: 34px 30px 28px;
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border-soft);
-      overflow: hidden;
+      /*overflow: hidden;*/
     }
 
     /* Subtle wave-lights */
@@ -68,37 +72,31 @@
       pointer-events: none;
     }
     .hero::before {
-      width: 520px; height: 520px;
+      width: 560px; height: 560px;
       background: radial-gradient(circle, rgba(26, 58, 74, 0.95), transparent 60%);
-      top: -220px; right: -180px;
+      top: -240px; right: -220px;
     }
     .hero::after {
-      width: 360px; height: 360px;
+      width: 420px; height: 420px;
       background: radial-gradient(circle, rgba(185, 215, 232, 0.85), transparent 65%);
-      bottom: -190px; left: -120px;
+      bottom: -220px; left: -140px;
     }
 
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
-      gap: 30px;
-      align-items: start;
+    .topbar{
+      position: sticky;
+      top: 14px;
+      z-index: 50;
+      background: rgba(8, 18, 26, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 10px 12px;
+
+      backdrop-filter: blur(14px);
+      margin-bottom: 32px;
     }
 
-    @media (max-width: 840px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero { padding: 26px 20px 22px; }
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
+    [id]{
+      scroll-margin-top: 90px;
     }
 
     .brand {
@@ -113,7 +111,7 @@
       font-size: 12px;
       letter-spacing: 0.10em;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 800;
     }
 
     .brand-dot {
@@ -146,20 +144,18 @@
       border-color: rgba(191, 222, 242, 0.22);
     }
 
-    .title {
-      font-size: clamp(28px, 3.2vw, 38px);
-      line-height: 1.15;
-      font-weight: 650;
-      margin: 6px 0 10px;
-      letter-spacing: -0.02em;
+    /* Centered, mobile-first layout */
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
     }
 
-    .subtitle {
-      font-size: 15px;
-      line-height: 1.65;
-      color: var(--text-muted);
-      max-width: 40rem;
-      margin-bottom: 16px;
+    .center {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      text-align: center;
     }
 
     .tagline {
@@ -167,14 +163,31 @@
       color: var(--accent-soft);
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      margin: 14px 0 18px;
+      margin: 10px 0 14px;
+    }
+
+    .title {
+      font-size: clamp(30px, 3.4vw, 42px);
+      line-height: 1.10;
+      font-weight: 800;
+      margin: 6px 0 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      line-height: 1.70;
+      color: var(--text-muted);
+      margin: 0 auto 10px;
+      max-width: 52rem;
     }
 
     .highlight {
       display: inline-flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin: 8px 0 18px;
+      justify-content: center;
+      margin: 12px 0 18px;
     }
 
     .chip {
@@ -184,11 +197,13 @@
       border: 1px solid rgba(133, 178, 205, 0.40);
       color: var(--accent-soft);
       background: rgba(9, 32, 45, 0.78);
+      user-select: none;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
       margin: 10px 0 10px;
     }
@@ -198,9 +213,9 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 10px 16px;
+      padding: 11px 16px;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 800;
       border-radius: var(--radius-pill);
       border: 1px solid transparent;
       cursor: pointer;
@@ -228,13 +243,46 @@
     }
 
     .micro-note {
-      margin-top: 10px;
+      margin: 8px auto 0;
       font-size: 12px;
       color: var(--text-muted);
-      max-width: 46rem;
+      max-width: 56rem;
+      text-align: center;
     }
 
-    .right-panel { justify-self: stretch; }
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 16px auto;
+      max-width: var(--content-max);
+    }
+
+    /* Sections */
+    .section {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      max-width: var(--content-max);
+      margin: 0 auto 12px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      font-weight: 800;
+    }
+
+    .section-sub {
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(179, 192, 204, 0.95);
+    }
 
     .card {
       background: var(--card-bg);
@@ -242,28 +290,102 @@
       padding: 18px 16px 16px;
       border: 1px solid var(--border-soft);
       backdrop-filter: blur(14px);
+      max-width: var(--maxw);
+      margin: 0 auto;
     }
 
-    .card + .card { margin-top: 12px; }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
 
-    .card-header {
+    @media (max-width: 980px) {
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    .mini-card {
+      background: rgba(8, 18, 26, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 14px 14px 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-top {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 12px;
     }
 
-    .card-title {
-      font-size: 13px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .mini-title {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(9, 39, 53, 0.55);
+      border: 1px solid rgba(151, 210, 239, 0.26);
       color: var(--accent-soft);
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
-    .card-kicker {
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(127, 179, 213, 0.12);
+    }
+
+    .mini-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .mini-list {
+      list-style: none;
+      display: grid;
+      gap: 6px;
       font-size: 12px;
-      color: rgba(179, 192, 204, 0.85);
+      color: rgba(179, 192, 204, 0.95);
+      text-align: left;
+      margin-top: 4px;
+    }
+    .mini-list li::before {
+      content: "•";
+      color: rgba(185, 215, 232, 0.90);
+      margin-right: 8px;
+    }
+
+    .tight {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 980px) {
+      .stack { grid-template-columns: 1fr; }
     }
 
     .list {
@@ -271,25 +393,21 @@
       display: grid;
       gap: 10px;
       margin-top: 8px;
+      text-align: left;
     }
 
     .item-label { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
-    .item-value { font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.35; }
-
-    .divider {
-      height: 1px;
-      background: rgba(255,255,255,0.06);
-      margin: 12px 0;
-    }
+    .item-value { font-size: 14px; font-weight: 800; color: var(--text-main); line-height: 1.35; }
 
     .callout {
       font-size: 13px;
-      line-height: 1.55;
+      line-height: 1.60;
       color: var(--text-muted);
+      text-align: left;
     }
 
     .footer {
-      margin-top: 14px;
+      margin-top: 16px;
       font-size: 11px;
       color: var(--text-muted);
       display: flex;
@@ -297,6 +415,9 @@
       gap: 10px;
       justify-content: space-between;
       align-items: center;
+      max-width: var(--maxw);
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .footer a {
@@ -315,7 +436,6 @@
       .footer { flex-direction: column; align-items: flex-start; }
     }
 
-    /* Accessibility */
     a:focus-visible, .btn:focus-visible {
       outline: 2px solid rgba(185, 215, 232, 0.75);
       outline-offset: 3px;
@@ -327,7 +447,6 @@
 <body>
   <main class="page">
     <section class="hero" aria-label="Operational Ecology landing page">
-
       <div class="topbar">
         <div class="brand" aria-label="Brand">
           <span class="brand-dot" aria-hidden="true"></span>
@@ -335,22 +454,22 @@
         </div>
 
         <nav class="nav" aria-label="Site navigation">
-          <a href="#services">Services</a>
+          <a href="#offerings">Offerings</a>
+          <a href="#about">About</a>
           <a href="#approach">Approach</a>
-          <a href="#start">Start here</a>
+          <a href="#start">Start</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
 
       <div class="hero-inner">
-        <div>
+        <div class="center">
           <div class="tagline">Operational data and machine learning for environmental research teams</div>
-
           <h1 class="title">Make your data usable. Make your models reliable.</h1>
 
           <p class="subtitle">
-            Operational Ecology helps environmental and conservation teams turn messy field data into
-            dependable, reproducible workflows—so you spend less time wrangling and more time doing science.
+            We help environmental and conservation teams turn messy field data into dependable, reproducible workflows—
+            so you spend less time wrangling and more time doing science.
           </p>
 
           <div class="highlight" aria-label="Trust signals">
@@ -362,7 +481,6 @@
           </div>
 
           <div class="actions" id="contact">
-            <!-- Update emails when ready -->
             <a href="mailto:hello@operationalecology.io?subject=Operational%20Ecology%20%E2%80%93%20intro" class="btn btn-primary">
               Contact
               <span aria-hidden="true">→</span>
@@ -374,95 +492,254 @@
           </div>
 
           <div class="micro-note">
-            Remote-first. Fixed-scope deliverables. Clear handoffs. If you’re a resource-constrained team,
-            that’s the point.
+            Remote-first. Fixed-scope deliverables. Clear handoffs. Built for small teams with big datasets.
           </div>
         </div>
 
-        <div class="right-panel">
-          <div class="card" id="services">
-            <div class="card-header">
-              <div class="card-title">What we do</div>
-              <div class="card-kicker">Small teams • big data</div>
-            </div>
+        <div class="divider" role="separator" aria-hidden="true"></div>
 
-            <ul class="list">
-              <li>
-                <div class="item-label">Data systems</div>
-                <div class="item-value">Ingestion, QA, metadata standards, versioned manifests, and audit trails.</div>
-              </li>
-              <li>
-                <div class="item-label">ML support</div>
-                <div class="item-value">Evaluation protocols, benchmarking, error analysis, and dataset strategy.</div>
-              </li>
-              <li>
-                <div class="item-label">Operations</div>
-                <div class="item-value">Deployments, monitoring, cost controls, reproducibility, and documentation.</div>
-              </li>
-            </ul>
+        <!-- Offerings (centered, primary section) -->
+        <section class="section" id="offerings" aria-label="Offerings">
+          <div class="section-head">
+            <div class="eyebrow">Offerings</div>
+            <div class="section-sub">Start small. Scale when it’s working.</div>
           </div>
 
-          <div class="card" id="approach">
-            <div class="card-header">
-              <div class="card-title">How we work</div>
-              <div class="card-kicker">Trust by design</div>
-            </div>
+          <div class="card">
+            <div class="grid-3">
+              <div class="mini-card">
+                <div class="mini-top">
+                  <div class="mini-title">Rescue Audit</div>
+                  <div class="badge" aria-label="Timeline">
+                    <span class="badge-dot" aria-hidden="true"></span>
+                    2 weeks
+                  </div>
+                </div>
+                <div class="mini-text">
+                  A fixed-scope engagement to map your workflow, identify failure points, and produce a practical 30/60/90 plan.
+                </div>
+                <ul class="mini-list">
+                  <li>Current-state map + bottlenecks</li>
+                  <li>Priority backlog + risk register</li>
+                  <li>Funder-ready summary text</li>
+                </ul>
+              </div>
 
-            <div class="callout">
-              We focus on <strong>confidence</strong> and <strong>safety</strong>: systems that are explainable,
-              monitored, and maintainable. Every engagement ends with practical documentation and a handoff
-              so your team can keep moving without heroics.
+              <div class="mini-card">
+                <div class="mini-top">
+                  <div class="mini-title">Onboarding Sprint</div>
+                  <div class="badge" aria-label="Timeline">
+                    <span class="badge-dot" aria-hidden="true"></span>
+                    2–4 weeks
+                  </div>
+                </div>
+                <div class="mini-text">
+                  Bring a dataset online: ingestion, standards, QA, and handoff. Ideal for new populations, sensors, or partnerships.
+                </div>
+                <ul class="mini-list">
+                  <li>Ingest + normalize metadata</li>
+                  <li>QA report + known limits</li>
+                  <li>Reproducible pipeline + docs</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <div class="mini-top">
+                  <div class="mini-title">Model Readiness & Evaluation</div>
+                  <div class="badge" aria-label="Timeline">
+                    <span class="badge-dot" aria-hidden="true"></span>
+                    1–2 weeks
+                  </div>
+                </div>
+                <div class="mini-text">
+                  A clear answer to “is this model working?” and “what do we do next?” without committing to months of training.
+                </div>
+                <ul class="mini-list">
+                  <li>Evaluation protocol + metrics</li>
+                  <li>Error analysis + failure modes</li>
+                  <li>Data strategy + next steps</li>
+                </ul>
+              </div>
             </div>
 
             <div class="divider" role="separator" aria-hidden="true"></div>
 
-            <div class="highlight" aria-label="Working principles">
-              <span class="chip">Fixed scope</span>
-              <span class="chip">Measured outcomes</span>
-              <span class="chip">Secure by default</span>
-              <span class="chip">Operational runbooks</span>
+            <div class="micro-note" style="margin: 0 auto; text-align: center;">
+              Longer engagements are available for teams ready to operationalize end-to-end workflows: data pipelines, reproducibility,
+              cloud cost controls, monitoring, and deployment hygiene.
+            </div>
+          </div>
+        </section>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+        <section class="section" id="fit" aria-label="Who this is for">
+          <div class="section-head">
+            <div class="eyebrow">Who this is for</div>
+            <div class="section-sub">If any of this sounds familiar, we should talk.</div>
+          </div>
+
+          <div class="card">
+            <div class="grid-3">
+              <div class="mini-card">
+                <div class="mini-title">Teams</div>
+                <div class="mini-text">Small research groups, NGOs, labs, and field teams with growing datasets and limited engineering bandwidth.</div>
+                <ul class="mini-list">
+                  <li>Population monitoring programs</li>
+                  <li>Bioacoustics + photo-ID projects</li>
+                  <li>Multi-partner data collaborations</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <div class="mini-title">Typical problems</div>
+                <div class="mini-text">Workflows that “sort of work” until the dataset grows, staff changes, or the grant ends.</div>
+                <ul class="mini-list">
+                  <li>Manual QA and messy metadata</li>
+                  <li>Stalled ML initiatives</li>
+                  <li>Unclear provenance / reproducibility</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <div class="mini-title">What you get</div>
+                <div class="mini-text">Concrete artifacts you can operate and fund—not just advice.</div>
+                <ul class="mini-list">
+                  <li>30/60/90 plan + backlog</li>
+                  <li>Risk register + mitigations</li>
+                  <li>Runbooks + handoff docs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <section class="section" id="safety" aria-label="Trust and safety">
+          <div class="section-head">
+            <div class="eyebrow">Trust &amp; safety</div>
+            <div class="section-sub">Operational hygiene that makes partnerships and funders more comfortable.</div>
+          </div>
+
+          <div class="card">
+            <div class="stack" style="grid-template-columns: 1fr 1fr;">
+              <div class="mini-card">
+                <div class="mini-title">Data handling</div>
+                <div class="mini-text">We default to working inside your existing accounts and permissions, with least-privilege access.</div>
+                <ul class="mini-list">
+                  <li>NDA-friendly</li>
+                  <li>No data export without approval</li>
+                  <li>Audit trails where possible</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <div class="mini-title">Operational handoff</div>
+                <div class="mini-text">Every engagement ends with written docs and a clear operating procedure your team can run.</div>
+                <ul class="mini-list">
+                  <li>Runbooks + checklists</li>
+                  <li>Monitoring / alerting recommendations</li>
+                  <li>Reproducibility guardrails</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- About + Approach/Start (still centered overall, desktop-ready) -->
+        <section class="section tight" aria-label="About and details">
+          <div class="stack">
+            <div class="card" id="about">
+              <div class="section-head" style="margin-bottom: 10px;">
+                <div class="eyebrow">About</div>
+                <div class="section-sub">Pragmatic, field-aware engineering</div>
+              </div>
+
+              <div class="callout">
+                Operational Ecology is a small consultancy focused on environmental data systems and machine learning.
+                We build “boring” infrastructure on purpose: workflows that are <strong>safe</strong>, <strong>auditable</strong>,
+                and <strong>maintainable</strong>, with clear documentation and handoff.
+                <br><br>
+                Work is led by an applied machine learning engineer and researcher in conservation-focused computer vision
+                and ecological data pipelines—experienced with long-term datasets, photo-ID workflows, and operational systems
+                that must survive beyond a single grant cycle.
+              </div>
+
+              <div class="divider" role="separator" aria-hidden="true"></div>
+
+              <div class="highlight" aria-label="What you can expect">
+                <span class="chip">Clear scope</span>
+                <span class="chip">Written deliverables</span>
+                <span class="chip">Secure access patterns</span>
+                <span class="chip">Handoff docs</span>
+                <span class="chip">No heroics required</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="card" id="approach">
+                <div class="section-head" style="margin-bottom: 10px;">
+                  <div class="eyebrow">Approach</div>
+                  <div class="section-sub">Trust by design</div>
+                </div>
+
+                <ul class="list">
+                  <li>
+                    <div class="item-label">Confidence</div>
+                    <div class="item-value">Define metrics, measure outcomes, and make reliability visible.</div>
+                  </li>
+                  <li>
+                    <div class="item-label">Safety</div>
+                    <div class="item-value">Least-privilege access, careful data handling, and audit trails.</div>
+                  </li>
+                  <li>
+                    <div class="item-label">Knowledge</div>
+                    <div class="item-value">Documentation, runbooks, and training so your team can operate independently.</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card" id="start">
+                <div class="section-head" style="margin-bottom: 10px;">
+                  <div class="eyebrow">Start</div>
+                  <div class="section-sub">Two-week rescue audit</div>
+                </div>
+
+                <ul class="list">
+                  <li>
+                    <div class="item-label">You get</div>
+                    <div class="item-value">A current-state map, a prioritized 30/60/90 plan, and a funder-ready summary.</div>
+                  </li>
+                  <li>
+                    <div class="item-label">Best for</div>
+                    <div class="item-value">Teams with growing datasets, manual workflows, or stalled ML initiatives.</div>
+                  </li>
+                  <li>
+                    <div class="item-label">How it starts</div>
+                    <div class="item-value">A short call → access to existing docs/systems → a clear, written output.</div>
+                  </li>
+                </ul>
+
+                <div class="divider" role="separator" aria-hidden="true"></div>
+
+                <a href="mailto:hello@operationalecology.io?subject=Two-week%20rescue%20audit%20%E2%80%93%20intro" class="btn btn-primary" style="width: 100%;">
+                  Ask about the rescue audit
+                  <span aria-hidden="true">→</span>
+                </a>
+
+                <div class="micro-note" style="margin-top: 10px;">
+                  Nonprofit-friendly scope and pricing. Fixed-fee deposit/milestone terms available on request.
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" id="start">
-            <div class="card-header">
-              <div class="card-title">Start here</div>
-              <div class="card-kicker">Two-week rescue audit</div>
-            </div>
-
-            <ul class="list">
-              <li>
-                <div class="item-label">You get</div>
-                <div class="item-value">A current-state map, a prioritized 30/60/90 plan, and a funder-ready summary.</div>
-              </li>
-              <li>
-                <div class="item-label">Best for</div>
-                <div class="item-value">Teams with growing datasets, manual workflows, or stalled ML initiatives.</div>
-              </li>
-              <li>
-                <div class="item-label">Output</div>
-                <div class="item-value">Clear next steps—what to fix now, what to automate next, and what to stop doing.</div>
-              </li>
-            </ul>
-
-            <div class="divider" role="separator" aria-hidden="true"></div>
-
-            <a href="mailto:hello@operationalecology.io?subject=Two-week%20rescue%20audit" class="btn btn-primary" style="width: 100%;">
-              Ask about the rescue audit
-              <span aria-hidden="true">→</span>
-            </a>
-
-            <div class="micro-note" style="margin-top: 10px;">
-              Nonprofit-friendly pricing and scope. Work can run in your existing cloud accounts, or as approved pass-through compute.
-            </div>
-
-            <div class="footer" aria-label="Footer">
-              <span>© <span id="year"></span> Operational Ecology</span>
-              <span><a href="mailto:hello@operationalecology.io">hello@operationalecology.io</a></span>
-            </div>
+          <div class="footer" aria-label="Footer">
+            <span>© <span id="year"></span> Operational Ecology</span>
+            <span><a href="mailto:hello@operationalecology.io">hello@operationalecology.io</a></span>
           </div>
+        </section>
 
-        </div>
       </div>
     </section>
   </main>
