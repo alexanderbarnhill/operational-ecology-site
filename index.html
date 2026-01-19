@@ -443,19 +443,133 @@
       outline-offset: 3px;
       border-radius: 14px;
     }
+    .topbar{
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(9, 39, 53, 0.55);
+      border: 1px solid rgba(151, 210, 239, 0.22);
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    .brand-text{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 46vw; /* prevents the “big pill” on tiny screens */
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    /* Hamburger (hidden on desktop) */
+    .nav-toggle{
+      display: none;
+      width: 42px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(151, 210, 239, 0.22);
+      background: rgba(9, 32, 45, 0.35);
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    .nav-toggle:hover{
+      background: rgba(13, 34, 47, 0.65);
+      border-color: rgba(191, 222, 242, 0.55);
+    }
+
+    .nav-toggle-lines{
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: rgba(185, 215, 232, 0.9);
+      border-radius: 2px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .nav-toggle-lines::before,
+    .nav-toggle-lines::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      background: rgba(185, 215, 232, 0.9);
+      border-radius: 2px;
+    }
+    .nav-toggle-lines::before{ top: -6px; }
+    .nav-toggle-lines::after{ top: 6px; }
+
+    /* Desktop nav stays inline */
+    .nav{
+      display: flex;
+      gap: 8px;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+
+    /* Mobile: collapse into a single clean dropdown row */
+    @media (max-width: 720px){
+      .nav-toggle{ display: inline-flex; align-items: center; justify-content: center; }
+
+      .nav{
+        display: none;
+        width: 100%;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav a{
+        padding: 9px 12px;
+        background: rgba(9, 32, 45, 0.30);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .topbar.is-open {
+        flex-direction: column;
+      }
+
+      .topbar.is-open .nav{ display: flex; }
+
+      /* Hamburger -> X */
+      .topbar.is-open .nav-toggle-lines{ background: transparent; }
+      .topbar.is-open .nav-toggle-lines::before{ top: 0; transform: rotate(45deg); }
+      .topbar.is-open .nav-toggle-lines::after{ top: 0; transform: rotate(-45deg); }
+    }
+
   </style>
 </head>
 
 <body>
   <main class="page">
     <section class="hero" aria-label="Operational Ecology landing page">
-      <div class="topbar">
-        <div class="brand" aria-label="Brand">
+      <div class="topbar" id="topbar">
+        <a class="brand" href="#top" aria-label="Operational Ecology home">
           <span class="brand-dot" aria-hidden="true"></span>
-          <span>Operational Ecology</span>
-        </div>
+          <span class="brand-text">Operational Ecology</span>
+        </a>
 
-        <nav class="nav" aria-label="Site navigation">
+        <button class="nav-toggle" type="button"
+                aria-label="Toggle navigation"
+                aria-controls="site-nav"
+                aria-expanded="false">
+          <span class="nav-toggle-lines" aria-hidden="true"></span>
+        </button>
+
+        <nav class="nav" id="site-nav" aria-label="Site navigation">
           <a href="#offerings">Offerings</a>
           <a href="#about">About</a>
           <a href="#approach">Approach</a>
@@ -463,7 +577,7 @@
           <a href="#contact">Contact</a>
         </nav>
       </div>
-
+      <div id="top"></div>
       <div class="hero-inner">
         <div class="center">
           <div class="tagline">Operational data and machine learning for environmental research teams</div>
@@ -749,5 +863,30 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+  <script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  (function () {
+    const topbar = document.getElementById("topbar");
+    const btn = topbar?.querySelector(".nav-toggle");
+    const nav = document.getElementById("site-nav");
+    if (!topbar || !btn || !nav) return;
+
+    const setOpen = (open) => {
+      topbar.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+
+    btn.addEventListener("click", () => setOpen(!topbar.classList.contains("is-open")));
+
+    nav.querySelectorAll('a[href^="#"]').forEach((a) =>
+      a.addEventListener("click", () => setOpen(false))
+    );
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  })();
+</script>
 </body>
 </html>
