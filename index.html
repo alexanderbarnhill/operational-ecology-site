@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Operational Ecology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Operational data and machine learning for environmental research teams. Make your data usable. Make your models reliable."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Sea / blue-grey palette */
+      --bg-deep: #07131b;       /* deep navy */
+      --bg-deeper: #04090d;     /* near-black */
+      --bg-mid: #1a3a4a;        /* blue-grey */
+      --accent: #7fb3d5;        /* soft sea blue */
+      --accent-2: #5f93b6;      /* deeper accent */
+      --accent-soft: #b9d7e8;   /* lighter accent */
+      --text-main: #f5f7fa;     /* almost white */
+      --text-muted: #b3c0cc;    /* muted grey */
+      --card-bg: rgba(8, 18, 26, 0.82);
+      --border-soft: rgba(255, 255, 255, 0.07);
+      --shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.50);
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --radius-pill: 999px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #274863 0, var(--bg-deep) 55%, var(--bg-deeper) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 34px 16px;
+    }
+
+    .page { max-width: 1040px; width: 100%; }
+
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, rgba(19, 40, 53, 0.92), rgba(6, 18, 28, 0.98));
+      border-radius: var(--radius-xl);
+      padding: 34px 30px 28px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+    }
+
+    /* Subtle wave-lights */
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(44px);
+      opacity: 0.42;
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(26, 58, 74, 0.95), transparent 60%);
+      top: -220px; right: -180px;
+    }
+    .hero::after {
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(185, 215, 232, 0.85), transparent 65%);
+      bottom: -190px; left: -120px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 840px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero { padding: 26px 20px 22px; }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(9, 39, 53, 0.85);
+      border: 1px solid rgba(151, 210, 239, 0.28);
+      color: var(--accent-soft);
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .brand-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(127, 179, 213, 0.16);
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+    }
+
+    .nav a:hover {
+      color: var(--accent-soft);
+      background: rgba(13, 34, 47, 0.65);
+      border-color: rgba(191, 222, 242, 0.22);
+    }
+
+    .title {
+      font-size: clamp(28px, 3.2vw, 38px);
+      line-height: 1.15;
+      font-weight: 650;
+      margin: 6px 0 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 40rem;
+      margin-bottom: 16px;
+    }
+
+    .tagline {
+      font-size: 12px;
+      color: var(--accent-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin: 14px 0 18px;
+    }
+
+    .highlight {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 8px 0 18px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(133, 178, 205, 0.40);
+      color: var(--accent-soft);
+      background: rgba(9, 32, 45, 0.78);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.08s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06141f;
+      box-shadow: 0 10px 30px rgba(7, 21, 30, 0.65);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: rgba(9, 32, 45, 0.35);
+      color: var(--accent-soft);
+      border-color: rgba(149, 188, 215, 0.40);
+    }
+    .btn-ghost:hover {
+      background: rgba(13, 34, 47, 0.75);
+      border-color: rgba(191, 222, 242, 0.75);
+      transform: translateY(-1px);
+    }
+
+    .micro-note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 46rem;
+    }
+
+    .right-panel { justify-self: stretch; }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px 16px;
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .card + .card { margin-top: 12px; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+    }
+
+    .card-kicker {
+      font-size: 12px;
+      color: rgba(179, 192, 204, 0.85);
+    }
+
+    .list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .item-label { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
+    .item-value { font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.35; }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 12px 0;
+    }
+
+    .callout {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .footer {
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(179, 192, 204, 0.5);
+    }
+    .footer a:hover {
+      color: var(--accent-soft);
+      border-color: var(--accent-soft);
+    }
+
+    @media (max-width: 600px) {
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* Accessibility */
+    a:focus-visible, .btn:focus-visible {
+      outline: 2px solid rgba(185, 215, 232, 0.75);
+      outline-offset: 3px;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero" aria-label="Operational Ecology landing page">
+
+      <div class="topbar">
+        <div class="brand" aria-label="Brand">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span>Operational Ecology</span>
+        </div>
+
+        <nav class="nav" aria-label="Site navigation">
+          <a href="#services">Services</a>
+          <a href="#approach">Approach</a>
+          <a href="#start">Start here</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+
+      <div class="hero-inner">
+        <div>
+          <div class="tagline">Operational data and machine learning for environmental research teams</div>
+
+          <h1 class="title">Make your data usable. Make your models reliable.</h1>
+
+          <p class="subtitle">
+            Operational Ecology helps environmental and conservation teams turn messy field data into
+            dependable, reproducible workflows—so you spend less time wrangling and more time doing science.
+          </p>
+
+          <div class="highlight" aria-label="Trust signals">
+            <span class="chip">Confidence</span>
+            <span class="chip">Safety</span>
+            <span class="chip">Traceability</span>
+            <span class="chip">Reproducibility</span>
+            <span class="chip">Knowledge transfer</span>
+          </div>
+
+          <div class="actions" id="contact">
+            <!-- Update emails when ready -->
+            <a href="mailto:hello@operationalecology.io?subject=Operational%20Ecology%20%E2%80%93%20intro" class="btn btn-primary">
+              Contact
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="#start" class="btn btn-ghost">
+              Two-week rescue audit
+              <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+
+          <div class="micro-note">
+            Remote-first. Fixed-scope deliverables. Clear handoffs. If you’re a resource-constrained team,
+            that’s the point.
+          </div>
+        </div>
+
+        <div class="right-panel">
+          <div class="card" id="services">
+            <div class="card-header">
+              <div class="card-title">What we do</div>
+              <div class="card-kicker">Small teams • big data</div>
+            </div>
+
+            <ul class="list">
+              <li>
+                <div class="item-label">Data systems</div>
+                <div class="item-value">Ingestion, QA, metadata standards, versioned manifests, and audit trails.</div>
+              </li>
+              <li>
+                <div class="item-label">ML support</div>
+                <div class="item-value">Evaluation protocols, benchmarking, error analysis, and dataset strategy.</div>
+              </li>
+              <li>
+                <div class="item-label">Operations</div>
+                <div class="item-value">Deployments, monitoring, cost controls, reproducibility, and documentation.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card" id="approach">
+            <div class="card-header">
+              <div class="card-title">How we work</div>
+              <div class="card-kicker">Trust by design</div>
+            </div>
+
+            <div class="callout">
+              We focus on <strong>confidence</strong> and <strong>safety</strong>: systems that are explainable,
+              monitored, and maintainable. Every engagement ends with practical documentation and a handoff
+              so your team can keep moving without heroics.
+            </div>
+
+            <div class="divider" role="separator" aria-hidden="true"></div>
+
+            <div class="highlight" aria-label="Working principles">
+              <span class="chip">Fixed scope</span>
+              <span class="chip">Measured outcomes</span>
+              <span class="chip">Secure by default</span>
+              <span class="chip">Operational runbooks</span>
+            </div>
+          </div>
+
+          <div class="card" id="start">
+            <div class="card-header">
+              <div class="card-title">Start here</div>
+              <div class="card-kicker">Two-week rescue audit</div>
+            </div>
+
+            <ul class="list">
+              <li>
+                <div class="item-label">You get</div>
+                <div class="item-value">A current-state map, a prioritized 30/60/90 plan, and a funder-ready summary.</div>
+              </li>
+              <li>
+                <div class="item-label">Best for</div>
+                <div class="item-value">Teams with growing datasets, manual workflows, or stalled ML initiatives.</div>
+              </li>
+              <li>
+                <div class="item-label">Output</div>
+                <div class="item-value">Clear next steps—what to fix now, what to automate next, and what to stop doing.</div>
+              </li>
+            </ul>
+
+            <div class="divider" role="separator" aria-hidden="true"></div>
+
+            <a href="mailto:hello@operationalecology.io?subject=Two-week%20rescue%20audit" class="btn btn-primary" style="width: 100%;">
+              Ask about the rescue audit
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <div class="micro-note" style="margin-top: 10px;">
+              Nonprofit-friendly pricing and scope. Work can run in your existing cloud accounts, or as approved pass-through compute.
+            </div>
+
+            <div class="footer" aria-label="Footer">
+              <span>© <span id="year"></span> Operational Ecology</span>
+              <span><a href="mailto:hello@operationalecology.io">hello@operationalecology.io</a></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
