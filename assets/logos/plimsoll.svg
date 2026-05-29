@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="plimsoll">
+  <circle cx="128" cy="128" r="120" fill="#0b2540"/>
+  <circle cx="128" cy="128" r="120" stroke="#cfd6da" stroke-width="1.5" opacity="0.35"/>
+  <!-- the Plimsoll load mark: ring with a horizontal load line through it -->
+  <circle cx="128" cy="128" r="42" stroke="#cfd6da" stroke-width="6"/>
+  <line x1="56" y1="128" x2="200" y2="128" stroke="#cfd6da" stroke-width="6"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="pelorus">
+  <circle cx="128" cy="128" r="120" fill="#0b2540"/>
+  <circle cx="128" cy="128" r="120" stroke="#cfd6da" stroke-width="1.5" opacity="0.35"/>
+  <!-- bearing dial -->
+  <circle cx="128" cy="128" r="78" stroke="#cfd6da" stroke-width="3"/>
+  <circle cx="128" cy="128" r="34" stroke="#cfd6da" stroke-width="2"/>
+  <!-- cardinal ticks (N bolder = true-North reference) -->
+  <line x1="128" y1="42"  x2="128" y2="60"  stroke="#cfd6da" stroke-width="5"/>
+  <line x1="128" y1="196" x2="128" y2="214" stroke="#cfd6da" stroke-width="3"/>
+  <line x1="42"  y1="128" x2="60"  y2="128" stroke="#cfd6da" stroke-width="3"/>
+  <line x1="196" y1="128" x2="214" y2="128" stroke="#cfd6da" stroke-width="3"/>
+  <!-- intercardinal ticks -->
+  <line x1="68"  y1="68"  x2="80"  y2="80"  stroke="#cfd6da" stroke-width="2" opacity="0.7"/>
+  <line x1="188" y1="68"  x2="176" y2="80"  stroke="#cfd6da" stroke-width="2" opacity="0.7"/>
+  <line x1="68"  y1="188" x2="80"  y2="176" stroke="#cfd6da" stroke-width="2" opacity="0.7"/>
+  <line x1="188" y1="188" x2="176" y2="176" stroke="#cfd6da" stroke-width="2" opacity="0.7"/>
+  <!-- sighted bearing -->
+  <line x1="128" y1="128" x2="160" y2="80" stroke="#cfd6da" stroke-width="4"/>
+  <circle cx="128" cy="128" r="4" fill="#cfd6da"/>
+</svg>

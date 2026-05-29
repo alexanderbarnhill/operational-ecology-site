@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="consort">
+  <circle cx="128" cy="128" r="120" fill="#0b2540"/>
+  <circle cx="128" cy="128" r="120" stroke="#cfd6da" stroke-width="1.5" opacity="0.35"/>
+  <!-- two companion rings: encounter-mate co-occurrence -->
+  <circle cx="98"  cy="128" r="46" stroke="#cfd6da" stroke-width="6"/>
+  <circle cx="158" cy="128" r="46" stroke="#cfd6da" stroke-width="6"/>
+</svg>

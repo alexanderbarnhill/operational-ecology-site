@@ -4,889 +4,744 @@
   <meta charset="UTF-8" />
   <title>Operational Ecology</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Operational data and machine learning for environmental research teams. Make your data usable. Make your models reliable."
-  />
+  <meta name="description" content="Operational tools for conservation. Production machine-learning systems for environmental research programmes, built to be trusted with a partner's life's work." />
+  <meta property="og:title" content="Operational Ecology" />
+  <meta property="og:description" content="Operational tools for conservation." />
+  <meta property="og:image" content="https://operationalecology.io/assets/logos/operational-ecology.svg" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0b2540" />
+  <link rel="icon" type="image/svg+xml" href="assets/logos/operational-ecology.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..800;1,400..700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      /* Sea / blue-grey palette */
-      --bg-deep: #07131b;
-      --bg-deeper: #04090d;
-      --bg-mid: #1a3a4a;
-      --accent: #7fb3d5;
-      --accent-2: #5f93b6;
-      --accent-soft: #b9d7e8;
-      --text-main: #f5f7fa;
-      --text-muted: #b3c0cc;
+      /* Brand palette: deep ocean blue + foggy morning gray + optional brass. */
+      --ocean:       #0b2540;
+      --ocean-deep:  #071a30;
+      --ocean-lift:  #102e4e;
+      --fog:         #cfd6da;
+      --fog-mute:    rgba(207, 214, 218, 0.72);
+      --fog-soft:    rgba(207, 214, 218, 0.55);
+      --fog-faint:   rgba(207, 214, 218, 0.18);
+      --fog-line:    rgba(207, 214, 218, 0.12);
+      --brass:       #9a7b3a;
+      --plate:       rgba(207, 214, 218, 0.04);
+      --plate-strong: rgba(207, 214, 218, 0.07);
 
-      --card-bg: rgba(8, 18, 26, 0.82);
-      --border-soft: rgba(255, 255, 255, 0.07);
-      --shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.50);
-
-      --radius-md: 16px;
-      --radius-lg: 22px;
-      --radius-xl: 28px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
       --radius-pill: 999px;
 
       --maxw: 1120px;
-      --content-max: 820px;
+      --content-max: 760px;
+
+      --shadow-quiet: 0 1px 0 rgba(255,255,255,0.02), 0 24px 60px rgba(0,0,0,0.40);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text-main);
-      background: radial-gradient(circle at top left, #274863 0, var(--bg-deep) 55%, var(--bg-deeper) 100%);
+      font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--fog);
+      background: var(--ocean);
       min-height: 100vh;
-      padding: 34px 16px 54px;
+      padding: 24px 16px 48px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
     }
 
     .page { max-width: var(--maxw); margin: 0 auto; width: 100%; }
 
-    .hero {
-      position: relative;
-      background: linear-gradient(135deg, rgba(19, 40, 53, 0.92), rgba(6, 18, 28, 0.98));
-      border-radius: var(--radius-xl);
-      padding: 34px 30px 28px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--border-soft);
-      /*overflow: hidden;*/
-    }
+    [id] { scroll-margin-top: 96px; }
 
-    /* Subtle wave-lights */
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(44px);
-      opacity: 0.42;
-      pointer-events: none;
-    }
-    .hero::before {
-      width: 560px; height: 560px;
-      background: radial-gradient(circle, rgba(26, 58, 74, 0.95), transparent 60%);
-      top: -240px; right: -220px;
-    }
-    .hero::after {
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(185, 215, 232, 0.85), transparent 65%);
-      bottom: -220px; left: -140px;
-    }
-
-    .topbar{
+    /* Top bar — quiet, instrument-plate */
+    .topbar {
       position: sticky;
       top: 14px;
       z-index: 50;
-      background: rgba(8, 18, 26, 0.72);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 16px;
-      padding: 10px 12px;
-      width: 100%;
+      background: rgba(11, 37, 64, 0.78);
+      border: 1px solid var(--fog-line);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
       backdrop-filter: blur(14px);
-      margin-bottom: 32px;
-    }
-
-    [id]{
-      scroll-margin-top: 90px;
+      -webkit-backdrop-filter: blur(14px);
+      margin-bottom: 28px;
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 6px 14px;
-      border-radius: var(--radius-pill);
-      background: rgba(9, 39, 53, 0.85);
-      border: 1px solid rgba(151, 210, 239, 0.28);
-      color: var(--accent-soft);
-      font-size: 12px;
-      letter-spacing: 0.10em;
+      color: var(--fog);
+      text-decoration: none;
+    }
+    .brand-mark { width: 28px; height: 28px; display: block; }
+    .brand-text {
+      font-size: 13px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      font-weight: 800;
+      font-weight: 700;
+      color: var(--fog);
     }
 
-    .brand-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(127, 179, 213, 0.16);
+    .nav-toggle {
+      display: none;
+      width: 40px; height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--fog-line);
+      background: transparent;
+      cursor: pointer;
+      margin-left: auto;
     }
+    .nav-toggle-lines {
+      display: block; width: 18px; height: 2px;
+      background: var(--fog-mute);
+      border-radius: 2px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .nav-toggle-lines::before, .nav-toggle-lines::after {
+      content: ""; position: absolute; left: 0;
+      width: 18px; height: 2px;
+      background: var(--fog-mute);
+      border-radius: 2px;
+    }
+    .nav-toggle-lines::before { top: -6px; }
+    .nav-toggle-lines::after  { top:  6px; }
 
     .nav {
       display: flex;
-      gap: 10px;
+      gap: 4px;
       align-items: center;
-      flex-wrap: wrap;
+      margin-left: auto;
+      flex-wrap: nowrap;
     }
-
     .nav a {
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--fog-mute);
       text-decoration: none;
-      padding: 6px 10px;
-      border-radius: var(--radius-pill);
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
       border: 1px solid transparent;
-      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+      transition: color .15s ease, border-color .15s ease, background-color .15s ease;
     }
-
     .nav a:hover {
-      color: var(--accent-soft);
-      background: rgba(13, 34, 47, 0.65);
-      border-color: rgba(191, 222, 242, 0.22);
+      color: var(--fog);
+      background: var(--plate);
+      border-color: var(--fog-line);
     }
 
-    /* Centered, mobile-first layout */
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 14px;
-    }
-
-    .center {
-      max-width: var(--content-max);
-      margin: 0 auto;
+    /* Hero */
+    .hero {
       text-align: center;
+      padding: 56px 24px 24px;
     }
-
-    .tagline {
-      font-size: 12px;
-      color: var(--accent-soft);
+    .hero-mark { width: 132px; height: 132px; display: block; margin: 0 auto 28px; }
+    .eyebrow {
+      font-size: 11.5px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin: 10px 0 14px;
+      color: var(--fog-mute);
+      font-weight: 700;
     }
-
-    .title {
-      font-size: clamp(30px, 3.4vw, 42px);
-      line-height: 1.10;
+    h1.title {
+      font-size: clamp(30px, 4.2vw, 48px);
+      line-height: 1.12;
       font-weight: 800;
-      margin: 6px 0 10px;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.015em;
+      color: var(--fog);
+      margin: 16px auto 18px;
+      max-width: 22ch;
     }
-
     .subtitle {
-      font-size: 15px;
-      line-height: 1.70;
-      color: var(--text-muted);
-      margin: 0 auto 10px;
-      max-width: 52rem;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--fog-mute);
+      margin: 0 auto;
+      max-width: var(--content-max);
     }
-
-    .highlight {
-      display: inline-flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 12px 0 18px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 5px 10px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(133, 178, 205, 0.40);
-      color: var(--accent-soft);
-      background: rgba(9, 32, 45, 0.78);
-      user-select: none;
-    }
+    .subtitle p + p { margin-top: 12px; }
 
     .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin: 10px 0 10px;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      margin: 28px 0 8px;
     }
-
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 11px 16px;
-      font-size: 14px;
-      font-weight: 800;
-      border-radius: var(--radius-pill);
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.08s ease;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 18px;
+      font-size: 14px; font-weight: 700;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--fog);
+      cursor: pointer; text-decoration: none;
+      transition: background-color .15s ease, color .15s ease, border-color .15s ease;
       white-space: nowrap;
+      color: var(--fog);
+      background: transparent;
     }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #06141f;
-      box-shadow: 0 10px 30px rgba(7, 21, 30, 0.65);
-    }
-    .btn-primary:hover { transform: translateY(-1px); }
-
-    .btn-ghost {
-      background: rgba(9, 32, 45, 0.35);
-      color: var(--accent-soft);
-      border-color: rgba(149, 188, 215, 0.40);
-    }
-    .btn-ghost:hover {
-      background: rgba(13, 34, 47, 0.75);
-      border-color: rgba(191, 222, 242, 0.75);
-      transform: translateY(-1px);
-    }
-
-    .micro-note {
-      margin: 8px auto 0;
-      font-size: 12px;
-      color: var(--text-muted);
-      max-width: 56rem;
-      text-align: center;
-    }
-
-    .divider {
-      height: 1px;
-      background: rgba(255,255,255,0.06);
-      margin: 16px auto;
-      max-width: var(--content-max);
-    }
+    .btn:hover { background: var(--plate); }
+    .btn-primary { background: var(--fog); color: var(--ocean); }
+    .btn-primary:hover { background: #e5eaed; }
 
     /* Sections */
-    .section {
-      max-width: var(--maxw);
-      margin: 0 auto;
+    .section { margin: 56px auto 0; max-width: var(--maxw); }
+    .section-head { max-width: var(--content-max); margin: 0 auto 24px; text-align: center; }
+    .section-title {
+      font-size: clamp(20px, 2.4vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      color: var(--fog);
+      margin-top: 6px;
     }
-
-    .section-head {
-      max-width: var(--content-max);
-      margin: 0 auto 12px;
-      text-align: center;
-    }
-
-    .eyebrow {
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-soft);
-      font-weight: 800;
-    }
-
     .section-sub {
       margin-top: 8px;
-      font-size: 13px;
+      font-size: 14px;
+      color: var(--fog-mute);
       line-height: 1.6;
-      color: rgba(179, 192, 204, 0.95);
     }
 
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 18px 16px 16px;
-      border: 1px solid var(--border-soft);
-      backdrop-filter: blur(14px);
-      max-width: var(--maxw);
-      margin: 0 auto;
-    }
-
-    .grid-3 {
+    /* The work — project gallery */
+    .work-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
+    @media (max-width: 860px) { .work-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .work-grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 980px) {
-      .grid-3 { grid-template-columns: 1fr; }
+    .work-tile {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 16px 18px;
+      background: var(--plate);
+      border: 1px solid var(--fog-line);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .15s ease, background-color .15s ease, transform .12s ease;
+    }
+    .work-tile:hover {
+      border-color: var(--fog-faint);
+      background: var(--plate-strong);
+      transform: translateY(-1px);
+    }
+    .work-mark {
+      width: 56px; height: 56px;
+      display: block;
+    }
+    .work-name {
+      font-weight: 700;
+      color: var(--fog);
+      font-size: 15px;
+      letter-spacing: 0.005em;
+    }
+    .work-tag {
+      font-size: 12.5px;
+      color: var(--fog-mute);
+      margin-top: 2px;
+      line-height: 1.4;
     }
 
-    .mini-card {
-      background: rgba(8, 18, 26, 0.58);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    /* Card / mini-card grids */
+    .card {
+      background: var(--plate);
+      border: 1px solid var(--fog-line);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 860px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .mini {
+      background: rgba(207, 214, 218, 0.025);
+      border: 1px solid var(--fog-line);
       border-radius: var(--radius-md);
-      padding: 14px 14px 12px;
+      padding: 18px;
       display: grid;
       gap: 10px;
     }
-
-    .mini-top {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 10px;
+    .mini-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-
     .mini-title {
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: 0.01em;
+      font-size: 14.5px; font-weight: 700; color: var(--fog);
+      letter-spacing: 0.005em;
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 10px;
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 10px;
       border-radius: var(--radius-pill);
-      background: rgba(9, 39, 53, 0.55);
-      border: 1px solid rgba(151, 210, 239, 0.26);
-      color: var(--accent-soft);
-      font-size: 11px;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      font-weight: 800;
+      border: 1px solid var(--fog-line);
+      color: var(--fog-mute);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
       white-space: nowrap;
     }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(127, 179, 213, 0.12);
-    }
-
     .mini-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55;
+      font-size: 13.5px; color: var(--fog-mute); line-height: 1.6;
     }
-
     .mini-list {
-      list-style: none;
-      display: grid;
-      gap: 6px;
-      font-size: 12px;
-      color: rgba(179, 192, 204, 0.95);
-      text-align: left;
-      margin-top: 4px;
+      list-style: none; display: grid; gap: 4px;
+      font-size: 12.5px; color: var(--fog-mute);
+    }
+    .mini-list li {
+      position: relative; padding-left: 16px;
     }
     .mini-list li::before {
-      content: "•";
-      color: rgba(185, 215, 232, 0.90);
-      margin-right: 8px;
+      content: "—";
+      position: absolute; left: 0;
+      color: var(--fog-faint);
     }
 
-    .tight {
-      max-width: var(--maxw);
-      margin: 0 auto;
-    }
-
-    .stack {
+    /* Approach / Start details */
+    .stack-2 {
       display: grid;
-      gap: 12px;
-      max-width: var(--maxw);
-      margin: 0 auto;
       grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 860px) { .stack-2 { grid-template-columns: 1fr; } }
+
+    .detail-list {
+      list-style: none; display: grid; gap: 14px; margin-top: 6px;
+    }
+    .detail-label {
+      font-size: 11.5px; letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--fog-mute); margin-bottom: 4px;
+    }
+    .detail-value {
+      font-size: 14.5px; color: var(--fog); line-height: 1.5; font-weight: 600;
     }
 
-    @media (max-width: 980px) {
-      .stack { grid-template-columns: 1fr; }
-    }
+    /* Subtle divider */
+    .rule { height: 1px; background: var(--fog-line); margin: 20px auto; }
 
-    .list {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-      margin-top: 8px;
-      text-align: left;
-    }
-
-    .item-label { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
-    .item-value { font-size: 14px; font-weight: 800; color: var(--text-main); line-height: 1.35; }
-
+    /* About callout */
     .callout {
-      font-size: 13px;
-      line-height: 1.60;
-      color: var(--text-muted);
-      text-align: left;
+      font-size: 14.5px; line-height: 1.7; color: var(--fog-mute);
     }
+    .callout strong { color: var(--fog); font-weight: 700; }
 
+    /* Footer */
     .footer {
-      margin-top: 16px;
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
-      align-items: center;
-      max-width: var(--maxw);
-      margin-left: auto;
-      margin-right: auto;
+      margin-top: 48px;
+      padding-top: 22px;
+      border-top: 1px solid var(--fog-line);
+      font-size: 12.5px;
+      color: var(--fog-mute);
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
     }
+    .footer a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--fog-faint); }
+    .footer a:hover { color: var(--fog); border-color: var(--fog); }
 
-    .footer a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(179, 192, 204, 0.5);
+    /* Mobile nav */
+    @media (max-width: 720px) {
+      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav {
+        display: none; width: 100%; margin-top: 12px; padding-top: 12px;
+        border-top: 1px solid var(--fog-line);
+        justify-content: center; flex-wrap: wrap;
+      }
+      .nav a {
+        padding: 9px 12px; background: var(--plate); border-color: var(--fog-line);
+      }
+      .topbar.is-open { flex-direction: column; align-items: stretch; }
+      .topbar.is-open .nav { display: flex; }
+      .topbar.is-open .nav-toggle-lines { background: transparent; }
+      .topbar.is-open .nav-toggle-lines::before { top: 0; transform: rotate(45deg); }
+      .topbar.is-open .nav-toggle-lines::after  { top: 0; transform: rotate(-45deg); }
     }
-    .footer a:hover {
-      color: var(--accent-soft);
-      border-color: var(--accent-soft);
-    }
-
     @media (max-width: 600px) {
-      .actions { flex-direction: column; align-items: stretch; }
-      .btn { width: 100%; }
-      .footer { flex-direction: column; align-items: flex-start; }
+      .actions .btn { width: 100%; }
     }
 
-    a:focus-visible, .btn:focus-visible {
-      outline: 2px solid rgba(185, 215, 232, 0.75);
+    a:focus-visible, .btn:focus-visible, .work-tile:focus-visible {
+      outline: 2px solid var(--fog);
       outline-offset: 3px;
-      border-radius: 14px;
+      border-radius: var(--radius-md);
     }
-    .topbar{
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand{
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 12px;
-      border-radius: var(--radius-pill);
-      background: rgba(9, 39, 53, 0.55);
-      border: 1px solid rgba(151, 210, 239, 0.22);
-      color: var(--accent-soft);
-      text-decoration: none;
-    }
-
-    .brand-text{
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 46vw; /* prevents the “big pill” on tiny screens */
-      font-size: 12px;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-
-    /* Hamburger (hidden on desktop) */
-    .nav-toggle{
-      display: none;
-      width: 42px;
-      height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(151, 210, 239, 0.22);
-      background: rgba(9, 32, 45, 0.35);
-      cursor: pointer;
-      margin-left: auto;
-    }
-
-    .nav-toggle:hover{
-      background: rgba(13, 34, 47, 0.65);
-      border-color: rgba(191, 222, 242, 0.55);
-    }
-
-    .nav-toggle-lines{
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: rgba(185, 215, 232, 0.9);
-      border-radius: 2px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .nav-toggle-lines::before,
-    .nav-toggle-lines::after{
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 18px;
-      height: 2px;
-      background: rgba(185, 215, 232, 0.9);
-      border-radius: 2px;
-    }
-    .nav-toggle-lines::before{ top: -6px; }
-    .nav-toggle-lines::after{ top: 6px; }
-
-    /* Desktop nav stays inline */
-    .nav{
-      display: flex;
-      gap: 8px;
-      flex-wrap: nowrap;
-      align-items: center;
-    }
-
-    /* Mobile: collapse into a single clean dropdown row */
-    @media (max-width: 720px){
-      .nav-toggle{ display: inline-flex; align-items: center; justify-content: center; }
-
-      .nav{
-        display: none;
-        width: 100%;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid rgba(255,255,255,0.06);
-        justify-content: center;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-
-      .nav a{
-        padding: 9px 12px;
-        background: rgba(9, 32, 45, 0.30);
-        border: 1px solid rgba(255,255,255,0.06);
-      }
-      .topbar.is-open {
-        flex-direction: column;
-      }
-
-      .topbar.is-open .nav{ display: flex; }
-
-      /* Hamburger -> X */
-      .topbar.is-open .nav-toggle-lines{ background: transparent; }
-      .topbar.is-open .nav-toggle-lines::before{ top: 0; transform: rotate(45deg); }
-      .topbar.is-open .nav-toggle-lines::after{ top: 0; transform: rotate(-45deg); }
-    }
-
   </style>
 </head>
 
 <body>
   <main class="page">
-    <section class="hero" aria-label="Operational Ecology landing page">
-      <div class="topbar" id="topbar">
-        <a class="brand" href="#top" aria-label="Operational Ecology home">
-          <span class="brand-dot" aria-hidden="true"></span>
-          <span class="brand-text">Operational Ecology</span>
-        </a>
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#top" aria-label="Operational Ecology home">
+        <img class="brand-mark" src="assets/logos/operational-ecology.svg" alt="" />
+        <span class="brand-text">Operational Ecology</span>
+      </a>
 
-        <button class="nav-toggle" type="button"
-                aria-label="Toggle navigation"
-                aria-controls="site-nav"
-                aria-expanded="false">
-          <span class="nav-toggle-lines" aria-hidden="true"></span>
-        </button>
+      <button class="nav-toggle" type="button"
+              aria-label="Toggle navigation"
+              aria-controls="site-nav"
+              aria-expanded="false">
+        <span class="nav-toggle-lines" aria-hidden="true"></span>
+      </button>
 
-        <nav class="nav" id="site-nav" aria-label="Site navigation">
-          <a href="#offerings">Offerings</a>
-          <a href="#about">About</a>
-          <a href="#approach">Approach</a>
-          <a href="#start">Start</a>
-          <a href="#contact">Contact</a>
-        </nav>
+      <nav class="nav" id="site-nav" aria-label="Site navigation">
+        <a href="#work">Work</a>
+        <a href="#offerings">Offerings</a>
+        <a href="#how">How we work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div id="top"></div>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Operational Ecology">
+      <img class="hero-mark" src="assets/logos/operational-ecology.svg" alt="Operational Ecology" />
+      <div class="eyebrow">Operational tools for conservation</div>
+      <h1 class="title">Built to be trusted with a partner's life's work.</h1>
+      <div class="subtitle">
+        <p>
+          Conservation research generates more imagery, audio, and field data every year than the
+          people doing the work can process. The bottleneck is rarely the question — it is the time
+          it takes to extract the signal from data already collected by people who already know what
+          they are looking for.
+        </p>
+        <p>
+          Operational Ecology builds production machine-learning systems that close that gap.
+          The biologists and technicians whose careers are devoted to these populations are the
+          experts; our role is to amplify that work, without replacing or overshadowing it.
+        </p>
       </div>
-      <div id="top"></div>
-      <div class="hero-inner">
-        <div class="center">
-          <div class="tagline">Operational data and machine learning for environmental research teams</div>
-          <h1 class="title">Make your data usable. Make your models reliable.</h1>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:alex@operationalecology.io?subject=Operational%20Ecology%20%E2%80%93%20intro">
+          Get in touch <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn" href="#work">See the work</a>
+      </div>
+    </section>
 
-          <p class="subtitle">
-            We help environmental and conservation teams turn messy field data into dependable, reproducible workflows—
-            so you spend less time wrangling and more time doing science.
-          </p>
+    <!-- The work — project gallery -->
+    <section class="section" id="work" aria-label="The work">
+      <div class="section-head">
+        <div class="eyebrow">The work</div>
+        <div class="section-title">A family of calibrated tools.</div>
+        <div class="section-sub">
+          Named after maritime instruments — a pelorus, an almanac, a Plimsoll line, a scar watch.
+          The choice is deliberate. These were not gadgets; they were calibrated tools that
+          practitioners staked their judgement on, often in bad conditions. That is the standard
+          we hold ourselves to.
+        </div>
+      </div>
 
-          <div class="highlight" aria-label="Trust signals">
-            <span class="chip">Confidence</span>
-            <span class="chip">Safety</span>
-            <span class="chip">Traceability</span>
-            <span class="chip">Reproducibility</span>
-            <span class="chip">Knowledge transfer</span>
+      <div class="work-grid">
+        <a class="work-tile" href="https://github.com/Operational-Ecology/Scarwatch">
+          <img class="work-mark" src="assets/logos/scarwatch.svg" alt="" />
+          <div>
+            <div class="work-name">Scarwatch</div>
+            <div class="work-tag">Scar detection and tracking</div>
           </div>
-
-          <div class="actions" id="contact">
-            <a href="mailto:hello@operationalecology.io?subject=Operational%20Ecology%20%E2%80%93%20intro" class="btn btn-primary">
-              Contact
-              <span aria-hidden="true">→</span>
-            </a>
-            <a href="#start" class="btn btn-ghost">
-              Two-week rescue audit
-              <span aria-hidden="true">↘</span>
-            </a>
+        </a>
+        <a class="work-tile" href="https://github.com/Operational-Ecology/Consort">
+          <img class="work-mark" src="assets/logos/consort.svg" alt="" />
+          <div>
+            <div class="work-name">Consort</div>
+            <div class="work-tag">Encounter-aware photo-identification</div>
           </div>
+        </a>
+        <a class="work-tile" href="https://github.com/Operational-Ecology/Plimsoll">
+          <img class="work-mark" src="assets/logos/plimsoll.svg" alt="" />
+          <div>
+            <div class="work-name">Plimsoll</div>
+            <div class="work-tag">Whale body condition</div>
+          </div>
+        </a>
+        <a class="work-tile" href="https://github.com/Operational-Ecology/Pelorus">
+          <img class="work-mark" src="assets/logos/pelorus.svg" alt="" />
+          <div>
+            <div class="work-name">Pelorus</div>
+            <div class="work-tag">Whale position and bearing</div>
+          </div>
+        </a>
+        <a class="work-tile" href="https://github.com/Operational-Ecology/Almanac">
+          <img class="work-mark" src="assets/logos/almanac.svg" alt="" />
+          <div>
+            <div class="work-name">Almanac</div>
+            <div class="work-tag">Versioned dataset registry</div>
+          </div>
+        </a>
+        <a class="work-tile" href="https://github.com/Operational-Ecology/Forge">
+          <img class="work-mark" src="assets/logos/forge.svg" alt="" />
+          <div>
+            <div class="work-name">Forge</div>
+            <div class="work-tag">Trained-model registry</div>
+          </div>
+        </a>
+      </div>
+    </section>
 
-          <div class="micro-note">
-            Remote-first. Fixed-scope deliverables. Clear handoffs. Built for small teams with big datasets.
+    <!-- Offerings -->
+    <section class="section" id="offerings" aria-label="Offerings">
+      <div class="section-head">
+        <div class="eyebrow">Offerings</div>
+        <div class="section-title">Start small. Scale when it's working.</div>
+      </div>
+
+      <div class="grid-3">
+        <div class="mini">
+          <div class="mini-head">
+            <div class="mini-title">Rescue audit</div>
+            <span class="pill">2 weeks</span>
+          </div>
+          <div class="mini-text">
+            A fixed-scope engagement to map your workflow, identify failure points, and produce a
+            practical 30 / 60 / 90 plan.
+          </div>
+          <ul class="mini-list">
+            <li>Current-state map and bottlenecks</li>
+            <li>Priority backlog and risk register</li>
+            <li>Funder-ready written summary</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="mini-head">
+            <div class="mini-title">Onboarding sprint</div>
+            <span class="pill">2–4 weeks</span>
+          </div>
+          <div class="mini-text">
+            Bring a dataset online: ingestion, standards, QA, and handoff. Suited to new
+            populations, new sensors, or new partnerships.
+          </div>
+          <ul class="mini-list">
+            <li>Ingest and normalise metadata</li>
+            <li>QA report and known limits</li>
+            <li>Reproducible pipeline and docs</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="mini-head">
+            <div class="mini-title">Model readiness</div>
+            <span class="pill">1–2 weeks</span>
+          </div>
+          <div class="mini-text">
+            A clear answer to "is this model working?" and "what do we do next?" without committing
+            to months of training.
+          </div>
+          <ul class="mini-list">
+            <li>Evaluation protocol and metrics</li>
+            <li>Error analysis and failure modes</li>
+            <li>Data strategy and next steps</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+      <div class="section-sub" style="text-align:center;">
+        Longer engagements are available for teams ready to operationalise end-to-end workflows —
+        data pipelines, reproducibility, monitoring, and deployment hygiene.
+      </div>
+    </section>
+
+    <!-- How we work -->
+    <section class="section" id="how" aria-label="How we work">
+      <div class="section-head">
+        <div class="eyebrow">How we work</div>
+        <div class="section-title">Trust earned by being right.</div>
+        <div class="section-sub">
+          Calibrated, honest about limits, durable. The same commitments carry through every
+          project we ship.
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="mini">
+          <div class="mini-title">Honest evaluation by default</div>
+          <div class="mini-text">
+            Where ground truth is incomplete, we say so. Models that don't know they're uncertain
+            don't ship; calibration, intervals, abstention, and per-sample diagnostics live in every
+            result.
+          </div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Semi-automated, not autonomous</div>
+          <div class="mini-text">
+            The default stance is triage and amplification of expert review, not autonomous
+            replacement — unless and until evidence justifies otherwise.
+          </div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Reproducible by construction</div>
+          <div class="mini-text">
+            Frozen SHAs, versioned datasets, run manifests, committed dependency locks. A reported
+            number is always traceable to the exact code and data that produced it.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & safety / Operational hygiene -->
+    <section class="section" id="trust" aria-label="Trust and safety">
+      <div class="section-head">
+        <div class="eyebrow">Trust &amp; safety</div>
+        <div class="section-title">Operational hygiene partners and funders can verify.</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="mini">
+          <div class="mini-title">Data handling</div>
+          <div class="mini-text">
+            We work inside your existing accounts and permissions with least-privilege access —
+            data does not leave the systems it already lives in.
+          </div>
+          <ul class="mini-list">
+            <li>NDA-friendly</li>
+            <li>No data export without explicit approval</li>
+            <li>Audit trails where the substrate supports them</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="mini-title">Operational handoff</div>
+          <div class="mini-text">
+            Every engagement ends with written documentation and a clear operating procedure your
+            team can run after we leave.
+          </div>
+          <ul class="mini-list">
+            <li>Runbooks and checklists</li>
+            <li>Monitoring and alerting recommendations</li>
+            <li>Reproducibility guardrails</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- About + Approach + Start -->
+    <section class="section" id="about" aria-label="About and details">
+      <div class="section-head">
+        <div class="eyebrow">About</div>
+        <div class="section-title">Pragmatic, field-aware engineering.</div>
+      </div>
+
+      <div class="stack-2">
+        <div class="card">
+          <div class="callout">
+            Operational Ecology is a small product organisation focused on environmental data
+            systems and machine learning. We build "boring" infrastructure on purpose: workflows
+            that are <strong>safe</strong>, <strong>auditable</strong>, and
+            <strong>maintainable</strong>, with clear documentation and handoff.
+            <br/><br/>
+            The work is led by an applied machine-learning engineer and researcher in
+            conservation-focused computer vision and ecological data pipelines — experienced with
+            long-term datasets, photo-identification workflows, and operational systems that must
+            survive beyond a single grant cycle.
+            <br/><br/>
+            Lineage:
+            <a href="https://www.nature.com/articles/s41598-021-02506-6" target="_blank" rel="noopener">FIN-PRINT</a>
+            (individual killer-whale recognition),
+            <a href="https://finwave.io" target="_blank" rel="noopener">finwave.io</a>
+            (population-scale photo-ID workflows used by working biologists today), and the FinScar
+            publication (Barnhill et al., <em>Marine Mammal Science</em>, 2025).
           </div>
         </div>
 
-        <div class="divider" role="separator" aria-hidden="true"></div>
-
-        <!-- Offerings (centered, primary section) -->
-        <section class="section" id="offerings" aria-label="Offerings">
-          <div class="section-head">
-            <div class="eyebrow">Offerings</div>
-            <div class="section-sub">Start small. Scale when it’s working.</div>
+        <div>
+          <div class="card" id="approach" style="margin-bottom: 14px;">
+            <div class="section-head" style="margin-bottom: 14px; text-align: left;">
+              <div class="eyebrow">Approach</div>
+              <div class="section-title" style="font-size: 18px;">Trust by design.</div>
+            </div>
+            <ul class="detail-list">
+              <li>
+                <div class="detail-label">Confidence</div>
+                <div class="detail-value">Define metrics, measure outcomes, make reliability visible.</div>
+              </li>
+              <li>
+                <div class="detail-label">Safety</div>
+                <div class="detail-value">Least-privilege access, careful data handling, audit trails.</div>
+              </li>
+              <li>
+                <div class="detail-label">Knowledge</div>
+                <div class="detail-value">Documentation, runbooks, and training so your team can operate independently.</div>
+              </li>
+            </ul>
           </div>
 
-          <div class="card">
-            <div class="grid-3">
-              <div class="mini-card">
-                <div class="mini-top">
-                  <div class="mini-title">Rescue Audit</div>
-                  <div class="badge" aria-label="Timeline">
-                    <span class="badge-dot" aria-hidden="true"></span>
-                    2 weeks
-                  </div>
-                </div>
-                <div class="mini-text">
-                  A fixed-scope engagement to map your workflow, identify failure points, and produce a practical 30/60/90 plan.
-                </div>
-                <ul class="mini-list">
-                  <li>Current-state map + bottlenecks</li>
-                  <li>Priority backlog + risk register</li>
-                  <li>Funder-ready summary text</li>
-                </ul>
-              </div>
-
-              <div class="mini-card">
-                <div class="mini-top">
-                  <div class="mini-title">Onboarding Sprint</div>
-                  <div class="badge" aria-label="Timeline">
-                    <span class="badge-dot" aria-hidden="true"></span>
-                    2–4 weeks
-                  </div>
-                </div>
-                <div class="mini-text">
-                  Bring a dataset online: ingestion, standards, QA, and handoff. Ideal for new populations, sensors, or partnerships.
-                </div>
-                <ul class="mini-list">
-                  <li>Ingest + normalize metadata</li>
-                  <li>QA report + known limits</li>
-                  <li>Reproducible pipeline + docs</li>
-                </ul>
-              </div>
-
-              <div class="mini-card">
-                <div class="mini-top">
-                  <div class="mini-title">Model Readiness & Evaluation</div>
-                  <div class="badge" aria-label="Timeline">
-                    <span class="badge-dot" aria-hidden="true"></span>
-                    1–2 weeks
-                  </div>
-                </div>
-                <div class="mini-text">
-                  A clear answer to “is this model working?” and “what do we do next?” without committing to months of training.
-                </div>
-                <ul class="mini-list">
-                  <li>Evaluation protocol + metrics</li>
-                  <li>Error analysis + failure modes</li>
-                  <li>Data strategy + next steps</li>
-                </ul>
-              </div>
+          <div class="card" id="start">
+            <div class="section-head" style="margin-bottom: 14px; text-align: left;">
+              <div class="eyebrow">Start</div>
+              <div class="section-title" style="font-size: 18px;">Two-week rescue audit.</div>
             </div>
-
-            <div class="divider" role="separator" aria-hidden="true"></div>
-
-            <div class="micro-note" style="margin: 0 auto; text-align: center;">
-              Longer engagements are available for teams ready to operationalize end-to-end workflows: data pipelines, reproducibility,
-              cloud cost controls, monitoring, and deployment hygiene.
+            <ul class="detail-list">
+              <li>
+                <div class="detail-label">You get</div>
+                <div class="detail-value">A current-state map, a prioritised 30 / 60 / 90 plan, and a funder-ready summary.</div>
+              </li>
+              <li>
+                <div class="detail-label">Best for</div>
+                <div class="detail-value">Teams with growing datasets, manual workflows, or stalled ML initiatives.</div>
+              </li>
+              <li>
+                <div class="detail-label">How it starts</div>
+                <div class="detail-value">A short call → access to existing docs and systems → a clear, written output.</div>
+              </li>
+            </ul>
+            <div class="rule"></div>
+            <a class="btn btn-primary" style="width: 100%; justify-content: center;"
+               href="mailto:alex@operationalecology.io?subject=Two-week%20rescue%20audit%20%E2%80%93%20intro">
+              Ask about the rescue audit <span aria-hidden="true">→</span>
+            </a>
+            <div class="section-sub" style="margin-top: 10px; text-align: center;">
+              Nonprofit-friendly scope and pricing. Fixed-fee deposit / milestone terms available on request.
             </div>
           </div>
-        </section>
-
-        <div class="divider" role="separator" aria-hidden="true"></div>
-        <section class="section" id="fit" aria-label="Who this is for">
-          <div class="section-head">
-            <div class="eyebrow">Who this is for</div>
-            <div class="section-sub">If any of this sounds familiar, we should talk.</div>
-          </div>
-
-          <div class="card">
-            <div class="grid-3">
-              <div class="mini-card">
-                <div class="mini-title">Teams</div>
-                <div class="mini-text">Small research groups, NGOs, labs, and field teams with growing datasets and limited engineering bandwidth.</div>
-                <ul class="mini-list">
-                  <li>Population monitoring programs</li>
-                  <li>Bioacoustics + photo-ID projects</li>
-                  <li>Multi-partner data collaborations</li>
-                </ul>
-              </div>
-
-              <div class="mini-card">
-                <div class="mini-title">Typical problems</div>
-                <div class="mini-text">Workflows that “sort of work” until the dataset grows, staff changes, or the grant ends.</div>
-                <ul class="mini-list">
-                  <li>Manual QA and messy metadata</li>
-                  <li>Stalled ML initiatives</li>
-                  <li>Unclear provenance / reproducibility</li>
-                </ul>
-              </div>
-
-              <div class="mini-card">
-                <div class="mini-title">What you get</div>
-                <div class="mini-text">Concrete artifacts you can operate and fund—not just advice.</div>
-                <ul class="mini-list">
-                  <li>30/60/90 plan + backlog</li>
-                  <li>Risk register + mitigations</li>
-                  <li>Runbooks + handoff docs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="divider" role="separator" aria-hidden="true"></div>
-
-        <section class="section" id="safety" aria-label="Trust and safety">
-          <div class="section-head">
-            <div class="eyebrow">Trust &amp; safety</div>
-            <div class="section-sub">Operational hygiene that makes partnerships and funders more comfortable.</div>
-          </div>
-
-          <div class="card">
-            <div class="stack" style="grid-template-columns: 1fr 1fr;">
-              <div class="mini-card">
-                <div class="mini-title">Data handling</div>
-                <div class="mini-text">We default to working inside your existing accounts and permissions, with least-privilege access.</div>
-                <ul class="mini-list">
-                  <li>NDA-friendly</li>
-                  <li>No data export without approval</li>
-                  <li>Audit trails where possible</li>
-                </ul>
-              </div>
-
-              <div class="mini-card">
-                <div class="mini-title">Operational handoff</div>
-                <div class="mini-text">Every engagement ends with written docs and a clear operating procedure your team can run.</div>
-                <ul class="mini-list">
-                  <li>Runbooks + checklists</li>
-                  <li>Monitoring / alerting recommendations</li>
-                  <li>Reproducibility guardrails</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- About + Approach/Start (still centered overall, desktop-ready) -->
-        <section class="section tight" aria-label="About and details">
-          <div class="stack">
-            <div class="card" id="about">
-              <div class="section-head" style="margin-bottom: 10px;">
-                <div class="eyebrow">About</div>
-                <div class="section-sub">Pragmatic, field-aware engineering</div>
-              </div>
-
-              <div class="callout">
-                Operational Ecology is a small consultancy focused on environmental data systems and machine learning.
-                We build “boring” infrastructure on purpose: workflows that are <strong>safe</strong>, <strong>auditable</strong>,
-                and <strong>maintainable</strong>, with clear documentation and handoff.
-                <br><br>
-                Work is led by an applied machine learning engineer and researcher in conservation-focused computer vision
-                and ecological data pipelines—experienced with long-term datasets, photo-ID workflows, and operational systems
-                that must survive beyond a single grant cycle.
-              </div>
-
-              <div class="divider" role="separator" aria-hidden="true"></div>
-
-              <div class="highlight" aria-label="What you can expect">
-                <span class="chip">Clear scope</span>
-                <span class="chip">Written deliverables</span>
-                <span class="chip">Secure access patterns</span>
-                <span class="chip">Handoff docs</span>
-                <span class="chip">No heroics required</span>
-              </div>
-            </div>
-
-            <div>
-              <div class="card" id="approach">
-                <div class="section-head" style="margin-bottom: 10px;">
-                  <div class="eyebrow">Approach</div>
-                  <div class="section-sub">Trust by design</div>
-                </div>
-
-                <ul class="list">
-                  <li>
-                    <div class="item-label">Confidence</div>
-                    <div class="item-value">Define metrics, measure outcomes, and make reliability visible.</div>
-                  </li>
-                  <li>
-                    <div class="item-label">Safety</div>
-                    <div class="item-value">Least-privilege access, careful data handling, and audit trails.</div>
-                  </li>
-                  <li>
-                    <div class="item-label">Knowledge</div>
-                    <div class="item-value">Documentation, runbooks, and training so your team can operate independently.</div>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="card" id="start">
-                <div class="section-head" style="margin-bottom: 10px;">
-                  <div class="eyebrow">Start</div>
-                  <div class="section-sub">Two-week rescue audit</div>
-                </div>
-
-                <ul class="list">
-                  <li>
-                    <div class="item-label">You get</div>
-                    <div class="item-value">A current-state map, a prioritized 30/60/90 plan, and a funder-ready summary.</div>
-                  </li>
-                  <li>
-                    <div class="item-label">Best for</div>
-                    <div class="item-value">Teams with growing datasets, manual workflows, or stalled ML initiatives.</div>
-                  </li>
-                  <li>
-                    <div class="item-label">How it starts</div>
-                    <div class="item-value">A short call → access to existing docs/systems → a clear, written output.</div>
-                  </li>
-                </ul>
-
-                <div class="divider" role="separator" aria-hidden="true"></div>
-
-                <a href="mailto:hello@operationalecology.io?subject=Two-week%20rescue%20audit%20%E2%80%93%20intro" class="btn btn-primary" style="width: 100%;">
-                  Ask about the rescue audit
-                  <span aria-hidden="true">→</span>
-                </a>
-
-                <div class="micro-note" style="margin-top: 10px;">
-                  Nonprofit-friendly scope and pricing. Fixed-fee deposit/milestone terms available on request.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="footer" aria-label="Footer">
-            <span>© <span id="year"></span> Operational Ecology</span>
-            <span><a href="mailto:hello@operationalecology.io">hello@operationalecology.io</a></span>
-          </div>
-        </section>
-
+        </div>
       </div>
     </section>
+
+    <footer class="footer" id="contact">
+      <span>© <span id="year"></span> Operational Ecology</span>
+      <span><a href="mailto:alex@operationalecology.io">alex@operationalecology.io</a></span>
+    </footer>
   </main>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function () {
+      const topbar = document.getElementById("topbar");
+      const btn = topbar?.querySelector(".nav-toggle");
+      const nav = document.getElementById("site-nav");
+      if (!topbar || !btn || !nav) return;
+
+      const setOpen = (open) => {
+        topbar.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      };
+
+      btn.addEventListener("click", () => setOpen(!topbar.classList.contains("is-open")));
+      nav.querySelectorAll('a[href^="#"]').forEach((a) =>
+        a.addEventListener("click", () => setOpen(false))
+      );
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+      });
+    })();
   </script>
-  <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  (function () {
-    const topbar = document.getElementById("topbar");
-    const btn = topbar?.querySelector(".nav-toggle");
-    const nav = document.getElementById("site-nav");
-    if (!topbar || !btn || !nav) return;
-
-    const setOpen = (open) => {
-      topbar.classList.toggle("is-open", open);
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-    };
-
-    btn.addEventListener("click", () => setOpen(!topbar.classList.contains("is-open")));
-
-    nav.querySelectorAll('a[href^="#"]').forEach((a) =>
-      a.addEventListener("click", () => setOpen(false))
-    );
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setOpen(false);
-    });
-  })();
-</script>
 </body>
 </html>

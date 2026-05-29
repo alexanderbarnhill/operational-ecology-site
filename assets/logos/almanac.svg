@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="almanac">
+  <circle cx="128" cy="128" r="120" fill="#0b2540"/>
+  <circle cx="128" cy="128" r="120" stroke="#cfd6da" stroke-width="1.5" opacity="0.35"/>
+  <!-- open book: two pages joined at a central spine -->
+  <path d="M 56 80 L 128 88 L 128 184 L 56 176 Z" stroke="#cfd6da" stroke-width="4"/>
+  <path d="M 200 80 L 128 88 L 128 184 L 200 176 Z" stroke="#cfd6da" stroke-width="4"/>
+  <!-- ephemerides — rows of tabulated values per page -->
+  <line x1="70" y1="110" x2="118" y2="116" stroke="#cfd6da" stroke-width="2"/>
+  <line x1="70" y1="130" x2="118" y2="135" stroke="#cfd6da" stroke-width="2"/>
+  <line x1="70" y1="150" x2="106" y2="154" stroke="#cfd6da" stroke-width="2"/>
+  <line x1="138" y1="116" x2="186" y2="110" stroke="#cfd6da" stroke-width="2"/>
+  <line x1="138" y1="135" x2="186" y2="130" stroke="#cfd6da" stroke-width="2"/>
+  <line x1="138" y1="154" x2="174" y2="150" stroke="#cfd6da" stroke-width="2"/>
+</svg>

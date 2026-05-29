@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="scarwatch">
+  <circle cx="128" cy="128" r="120" fill="#0b2540"/>
+  <circle cx="128" cy="128" r="120" stroke="#cfd6da" stroke-width="1.5" opacity="0.35"/>
+  <!-- waterline -->
+  <line x1="44" y1="196" x2="212" y2="196" stroke="#cfd6da" stroke-width="2" opacity="0.55"/>
+  <!-- dorsal fin (slightly raked, the killer-whale silhouette) -->
+  <path d="M 138 60 Q 124 100 88 196 L 176 196 Q 152 100 138 60 Z" stroke="#cfd6da" stroke-width="5"/>
+  <!-- conspecific scar marks across the fin -->
+  <line x1="116" y1="130" x2="148" y2="134" stroke="#cfd6da" stroke-width="3"/>
+  <line x1="108" y1="155" x2="156" y2="159" stroke="#cfd6da" stroke-width="3"/>
+  <line x1="100" y1="180" x2="164" y2="184" stroke="#cfd6da" stroke-width="3"/>
+</svg>

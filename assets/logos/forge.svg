@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="forge">
+  <circle cx="128" cy="128" r="120" fill="#0b2540"/>
+  <circle cx="128" cy="128" r="120" stroke="#cfd6da" stroke-width="1.5" opacity="0.35"/>
+  <!-- stacked checkpoints (versioned model artefacts) -->
+  <rect x="68" y="84"  width="120" height="22" rx="2" stroke="#cfd6da" stroke-width="3"/>
+  <rect x="68" y="117" width="120" height="22" rx="2" stroke="#cfd6da" stroke-width="3"/>
+  <rect x="68" y="150" width="120" height="22" rx="2" stroke="#cfd6da" stroke-width="3"/>
+  <!-- version tag bands on the topmost -->
+  <line x1="170" y1="92" x2="190" y2="92" stroke="#cfd6da" stroke-width="2" opacity="0.7"/>
+  <line x1="170" y1="98" x2="186" y2="98" stroke="#cfd6da" stroke-width="2" opacity="0.7"/>
+</svg>
