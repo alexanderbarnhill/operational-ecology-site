@@ -1,747 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Operational Ecology</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Operational tools for conservation. Production-grade machine-learning systems for environmental research programmes, built to be trusted with a partner's life's work." />
-  <meta property="og:title" content="Operational Ecology" />
-  <meta property="og:description" content="Operational tools for conservation." />
-  <meta property="og:image" content="https://operationalecology.io/assets/logos/operational-ecology.svg" />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#0b2540" />
-  <link rel="icon" type="image/svg+xml" href="assets/logos/operational-ecology.svg" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..800;1,400..700&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      /* Brand palette: deep ocean blue + foggy morning gray + optional brass. */
-      --ocean:       #0b2540;
-      --ocean-deep:  #071a30;
-      --ocean-lift:  #102e4e;
-      --fog:         #cfd6da;
-      --fog-mute:    rgba(207, 214, 218, 0.72);
-      --fog-soft:    rgba(207, 214, 218, 0.55);
-      --fog-faint:   rgba(207, 214, 218, 0.18);
-      --fog-line:    rgba(207, 214, 218, 0.12);
-      --brass:       #9a7b3a;
-      --plate:       rgba(207, 214, 218, 0.04);
-      --plate-strong: rgba(207, 214, 218, 0.07);
-
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-pill: 999px;
-
-      --maxw: 1120px;
-      --content-max: 760px;
-
-      --shadow-quiet: 0 1px 0 rgba(255,255,255,0.02), 0 24px 60px rgba(0,0,0,0.40);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-      color: var(--fog);
-      background: var(--ocean);
-      min-height: 100vh;
-      padding: 24px 16px 48px;
-      font-weight: 400;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .page { max-width: var(--maxw); margin: 0 auto; width: 100%; }
-
-    [id] { scroll-margin-top: 96px; }
-
-    /* Top bar — quiet, instrument-plate */
-    .topbar {
-      position: sticky;
-      top: 14px;
-      z-index: 50;
-      background: rgba(11, 37, 64, 0.78);
-      border: 1px solid var(--fog-line);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      margin-bottom: 28px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--fog);
-      text-decoration: none;
-    }
-    .brand-mark { width: 28px; height: 28px; display: block; }
-    .brand-text {
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--fog);
-    }
-
-    .nav-toggle {
-      display: none;
-      width: 40px; height: 36px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--fog-line);
-      background: transparent;
-      cursor: pointer;
-      margin-left: auto;
-    }
-    .nav-toggle-lines {
-      display: block; width: 18px; height: 2px;
-      background: var(--fog-mute);
-      border-radius: 2px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .nav-toggle-lines::before, .nav-toggle-lines::after {
-      content: ""; position: absolute; left: 0;
-      width: 18px; height: 2px;
-      background: var(--fog-mute);
-      border-radius: 2px;
-    }
-    .nav-toggle-lines::before { top: -6px; }
-    .nav-toggle-lines::after  { top:  6px; }
-
-    .nav {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      margin-left: auto;
-      flex-wrap: nowrap;
-    }
-    .nav a {
-      font-size: 13px;
-      color: var(--fog-mute);
-      text-decoration: none;
-      padding: 7px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-      transition: color .15s ease, border-color .15s ease, background-color .15s ease;
-    }
-    .nav a:hover {
-      color: var(--fog);
-      background: var(--plate);
-      border-color: var(--fog-line);
-    }
-
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 56px 24px 24px;
-    }
-    .hero-mark { width: 132px; height: 132px; display: block; margin: 0 auto 28px; }
-    .eyebrow {
-      font-size: 11.5px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--fog-mute);
-      font-weight: 700;
-    }
-    h1.title {
-      font-size: clamp(30px, 4.2vw, 48px);
-      line-height: 1.12;
-      font-weight: 800;
-      letter-spacing: -0.015em;
-      color: var(--fog);
-      margin: 16px auto 18px;
-      max-width: 22ch;
-    }
-    .subtitle {
-      font-size: 16px;
-      line-height: 1.65;
-      color: var(--fog-mute);
-      margin: 0 auto;
-      max-width: var(--content-max);
-    }
-    .subtitle p + p { margin-top: 12px; }
-
-    .actions {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-      margin: 28px 0 8px;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 18px;
-      font-size: 14px; font-weight: 700;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--fog);
-      cursor: pointer; text-decoration: none;
-      transition: background-color .15s ease, color .15s ease, border-color .15s ease;
-      white-space: nowrap;
-      color: var(--fog);
-      background: transparent;
-    }
-    .btn:hover { background: var(--plate); }
-    .btn-primary { background: var(--fog); color: var(--ocean); }
-    .btn-primary:hover { background: #e5eaed; }
-
-    /* Sections */
-    .section { margin: 56px auto 0; max-width: var(--maxw); }
-    .section-head { max-width: var(--content-max); margin: 0 auto 24px; text-align: center; }
-    .section-title {
-      font-size: clamp(20px, 2.4vw, 26px);
-      font-weight: 700;
-      letter-spacing: -0.005em;
-      color: var(--fog);
-      margin-top: 6px;
-    }
-    .section-sub {
-      margin-top: 8px;
-      font-size: 14px;
-      color: var(--fog-mute);
-      line-height: 1.6;
-    }
-
-    /* The work — project gallery */
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-    @media (max-width: 860px) { .work-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 560px) { .work-grid { grid-template-columns: 1fr; } }
-
-    .work-tile {
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 14px;
-      align-items: center;
-      padding: 16px 18px;
-      background: var(--plate);
-      border: 1px solid var(--fog-line);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      color: inherit;
-      transition: border-color .15s ease, background-color .15s ease, transform .12s ease;
-    }
-    .work-tile:hover {
-      border-color: var(--fog-faint);
-      background: var(--plate-strong);
-      transform: translateY(-1px);
-    }
-    .work-mark {
-      width: 56px; height: 56px;
-      display: block;
-    }
-    .work-name {
-      font-weight: 700;
-      color: var(--fog);
-      font-size: 15px;
-      letter-spacing: 0.005em;
-    }
-    .work-tag {
-      font-size: 12.5px;
-      color: var(--fog-mute);
-      margin-top: 2px;
-      line-height: 1.4;
-    }
-
-    /* Card / mini-card grids */
-    .card {
-      background: var(--plate);
-      border: 1px solid var(--fog-line);
-      border-radius: var(--radius-lg);
-      padding: 22px;
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 860px) {
-      .grid-3 { grid-template-columns: 1fr; }
-      .grid-2 { grid-template-columns: 1fr; }
-    }
-
-    .mini {
-      background: rgba(207, 214, 218, 0.025);
-      border: 1px solid var(--fog-line);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      display: grid;
-      gap: 10px;
-    }
-    .mini-head {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-    .mini-title {
-      font-size: 14.5px; font-weight: 700; color: var(--fog);
-      letter-spacing: 0.005em;
-    }
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 3px 10px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--fog-line);
-      color: var(--fog-mute);
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .mini-text {
-      font-size: 13.5px; color: var(--fog-mute); line-height: 1.6;
-    }
-    .mini-list {
-      list-style: none; display: grid; gap: 4px;
-      font-size: 12.5px; color: var(--fog-mute);
-    }
-    .mini-list li {
-      position: relative; padding-left: 16px;
-    }
-    .mini-list li::before {
-      content: "—";
-      position: absolute; left: 0;
-      color: var(--fog-faint);
-    }
-
-    /* Approach / Start details */
-    .stack-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 860px) { .stack-2 { grid-template-columns: 1fr; } }
-
-    .detail-list {
-      list-style: none; display: grid; gap: 14px; margin-top: 6px;
-    }
-    .detail-label {
-      font-size: 11.5px; letter-spacing: 0.10em; text-transform: uppercase;
-      color: var(--fog-mute); margin-bottom: 4px;
-    }
-    .detail-value {
-      font-size: 14.5px; color: var(--fog); line-height: 1.5; font-weight: 600;
-    }
-
-    /* Subtle divider */
-    .rule { height: 1px; background: var(--fog-line); margin: 20px auto; }
-
-    /* About callout */
-    .callout {
-      font-size: 14.5px; line-height: 1.7; color: var(--fog-mute);
-    }
-    .callout strong { color: var(--fog); font-weight: 700; }
-
-    /* Footer */
-    .footer {
-      margin-top: 48px;
-      padding-top: 22px;
-      border-top: 1px solid var(--fog-line);
-      font-size: 12.5px;
-      color: var(--fog-mute);
-      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
-    }
-    .footer a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--fog-faint); }
-    .footer a:hover { color: var(--fog); border-color: var(--fog); }
-
-    /* Mobile nav */
-    @media (max-width: 720px) {
-      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
-      .nav {
-        display: none; width: 100%; margin-top: 12px; padding-top: 12px;
-        border-top: 1px solid var(--fog-line);
-        justify-content: center; flex-wrap: wrap;
-      }
-      .nav a {
-        padding: 9px 12px; background: var(--plate); border-color: var(--fog-line);
-      }
-      .topbar.is-open { flex-direction: column; align-items: stretch; }
-      .topbar.is-open .nav { display: flex; }
-      .topbar.is-open .nav-toggle-lines { background: transparent; }
-      .topbar.is-open .nav-toggle-lines::before { top: 0; transform: rotate(45deg); }
-      .topbar.is-open .nav-toggle-lines::after  { top: 0; transform: rotate(-45deg); }
-    }
-    @media (max-width: 600px) {
-      .actions .btn { width: 100%; }
-    }
-
-    a:focus-visible, .btn:focus-visible, .work-tile:focus-visible {
-      outline: 2px solid var(--fog);
-      outline-offset: 3px;
-      border-radius: var(--radius-md);
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operational Ecology</title>
+<meta name="description" content="Machine-learning systems that let conservation teams get through the data they have already collected.">
+<link rel="icon" href="logos/operational-ecology-inverse.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #f6f8f9; -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  a { color: #0b2540; }
+  a:hover { color: #1d6f8b; }
+  [id] { scroll-margin-top: 88px; }
+</style>
 </head>
-
 <body>
-  <main class="page">
-    <header class="topbar" id="topbar">
-      <a class="brand" href="#top" aria-label="Operational Ecology home">
-        <img class="brand-mark" src="assets/logos/operational-ecology.svg" alt="" />
-        <span class="brand-text">Operational Ecology</span>
+<div style="font-family: 'Source Sans 3', system-ui, sans-serif; color: #12283d; background: #f6f8f9; min-height: 100vh;">
+
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(246,248,249,0.9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(11,37,64,0.10);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; gap: 24px;">
+      <a href="index.html" style="display: inline-flex; align-items: center; gap: 11px; text-decoration: none; color: #0b2540;">
+        <img src="logos/operational-ecology-inverse.svg" alt="" style="width: 30px; height: 30px; display: block;" />
+        <span style="font-family: Archivo, system-ui, sans-serif; font-size: 12.5px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700;">Operational Ecology</span>
       </a>
-
-      <button class="nav-toggle" type="button"
-              aria-label="Toggle navigation"
-              aria-controls="site-nav"
-              aria-expanded="false">
-        <span class="nav-toggle-lines" aria-hidden="true"></span>
-      </button>
-
-      <nav class="nav" id="site-nav" aria-label="Site navigation">
-        <a href="#work">Work</a>
-        <a href="#offerings">Offerings</a>
-        <a href="#how">How we work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+      <nav style="display: flex; gap: 28px; align-items: center; margin-left: auto;">
+        <a href="#projects" style="font-size: 14.5px; color: #4d6478; text-decoration: none;">Projects</a>
+        <a href="about.html" style="font-size: 14.5px; color: #4d6478; text-decoration: none;">About</a>
+        <a href="contact.html" style="font-family: Archivo, system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: #ffffff; background: #0b2540; padding: 9px 18px; border-radius: 6px; text-decoration: none;">Get in touch</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <div id="top"></div>
-
-    <!-- Hero -->
-    <section class="hero" aria-label="Operational Ecology">
-      <img class="hero-mark" src="assets/logos/operational-ecology.svg" alt="Operational Ecology" />
-      <div class="eyebrow">Operational tools for conservation</div>
-      <h1 class="title">Built to be trusted with a partner's life's work.</h1>
-      <div class="subtitle">
-        <p>
-          Conservation research generates more imagery, audio, and field data every year than the
-          people doing the work can process. The bottleneck is rarely the question — it is the time
-          it takes to extract the signal from data already collected by people who already know what
-          they are looking for.
-        </p>
-        <p>
-          Operational Ecology builds production-grade machine-learning systems that close that gap.
-          The biologists and technicians whose careers are devoted to these populations are the
-          experts; our role is to amplify that work, without replacing or overshadowing it.
-        </p>
-      </div>
-      <div class="actions">
-        <a class="btn btn-primary" href="#contact">
-          Get in touch <span aria-hidden="true">→</span>
-        </a>
-        <a class="btn" href="#work">See the work</a>
-      </div>
-    </section>
-
-    <!-- The work — project gallery -->
-    <section class="section" id="work" aria-label="The work">
-      <div class="section-head">
-        <div class="eyebrow">The work</div>
-        <div class="section-title">A family of calibrated tools.</div>
-        <div class="section-sub">
-          Named after maritime instruments — a pelorus, an almanac, a Plimsoll line, a scar watch.
-          The choice is deliberate. These were not gadgets; they were calibrated tools that
-          practitioners staked their judgement on, often in bad conditions. That is the standard
-          we hold ourselves to.
+  <section style="max-width: 1180px; margin: 0 auto; padding: 84px 32px 88px;">
+    <div style="display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 64px; align-items: center;">
+      <div>
+        <div style="display: inline-flex; align-items: center; gap: 9px; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #1d6f8b; font-weight: 700;">
+          <span style="width: 22px; height: 2px; background: #1d6f8b;"></span>Operational tools for conservation
+        </div>
+        <h1 style="font-family: Archivo, system-ui, sans-serif; font-size: clamp(38px, 5.2vw, 62px); line-height: 1.04; font-weight: 600; letter-spacing: -0.025em; color: #0b2540; margin: 22px 0 0; max-width: 18ch; text-wrap: pretty;">Built to be trusted with a partner's life's work.</h1>
+        <p style="font-size: 19.5px; line-height: 1.6; color: #4d6478; margin: 24px 0 0; max-width: 50ch; text-wrap: pretty;">We build the machine-learning systems that let conservation teams get through the data they have already collected.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px;">
+          <a href="mailto:alex@operationalecology.io" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; font-family: Archivo, system-ui, sans-serif; font-size: 15px; font-weight: 600; border-radius: 6px; background: #0b2540; color: #ffffff; text-decoration: none;">Email us <span aria-hidden="true">→</span></a>
+          <a href="#projects" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; font-family: Archivo, system-ui, sans-serif; font-size: 15px; font-weight: 600; border-radius: 6px; border: 1px solid rgba(11,37,64,0.22); color: #0b2540; text-decoration: none;">See the projects</a>
         </div>
       </div>
-
-      <div class="work-grid">
-        <a class="work-tile" href="https://github.com/Operational-Ecology/Scarwatch">
-          <img class="work-mark" src="assets/logos/scarwatch.svg" alt="" />
-          <div>
-            <div class="work-name">Scarwatch</div>
-            <div class="work-tag">Scar detection and tracking</div>
-          </div>
-        </a>
-        <a class="work-tile" href="https://github.com/Operational-Ecology/Consort">
-          <img class="work-mark" src="assets/logos/consort.svg" alt="" />
-          <div>
-            <div class="work-name">Consort</div>
-            <div class="work-tag">Encounter-aware photo-identification</div>
-          </div>
-        </a>
-        <a class="work-tile" href="https://github.com/Operational-Ecology/Plimsoll">
-          <img class="work-mark" src="assets/logos/plimsoll.svg" alt="" />
-          <div>
-            <div class="work-name">Plimsoll</div>
-            <div class="work-tag">Whale body condition</div>
-          </div>
-        </a>
-        <a class="work-tile" href="https://github.com/Operational-Ecology/Pelorus">
-          <img class="work-mark" src="assets/logos/pelorus.svg" alt="" />
-          <div>
-            <div class="work-name">Pelorus</div>
-            <div class="work-tag">Whale position and bearing</div>
-          </div>
-        </a>
-        <a class="work-tile" href="https://github.com/Operational-Ecology/Almanac">
-          <img class="work-mark" src="assets/logos/almanac.svg" alt="" />
-          <div>
-            <div class="work-name">Almanac</div>
-            <div class="work-tag">Versioned dataset registry</div>
-          </div>
-        </a>
-        <a class="work-tile" href="https://github.com/Operational-Ecology/Forge">
-          <img class="work-mark" src="assets/logos/forge.svg" alt="" />
-          <div>
-            <div class="work-name">Forge</div>
-            <div class="work-tag">Trained-model registry</div>
-          </div>
-        </a>
+      <div style="position: relative; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 50px rgba(11,37,64,0.12);">
+        <img src="images/home-hero.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Offerings -->
-    <section class="section" id="offerings" aria-label="Offerings">
-      <div class="section-head">
-        <div class="eyebrow">Offerings</div>
-        <div class="section-title">Start small. Scale when it's working.</div>
-      </div>
-
-      <div class="grid-3">
-        <div class="mini">
-          <div class="mini-head">
-            <div class="mini-title">Rescue audit</div>
-            <span class="pill">2 weeks</span>
-          </div>
-          <div class="mini-text">
-            A fixed-scope engagement to map your workflow, identify failure points, and produce a
-            practical 30 / 60 / 90 plan.
-          </div>
-          <ul class="mini-list">
-            <li>Current-state map and bottlenecks</li>
-            <li>Priority backlog and risk register</li>
-            <li>Funder-ready written summary</li>
-          </ul>
+  <section style="background: #ffffff; border-top: 1px solid rgba(11,37,64,0.08); border-bottom: 1px solid rgba(11,37,64,0.08);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 80px 32px;">
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 64px; align-items: start;">
+        <div style="display: grid; gap: 40px; justify-items: center;">
+          <h2 style="font-family: Archivo, system-ui, sans-serif; font-size: clamp(30px, 3.2vw, 40px); line-height: 1.14; font-weight: 600; letter-spacing: -0.025em; color: #0b2540; margin: 0; text-wrap: pretty; justify-self: start;">The data is already collected. Getting through it is the work.</h2>
+          <img src="logos/operational-ecology-inverse.svg" alt="" style="width: 125px; height: 125px; display: block;" />
         </div>
-
-        <div class="mini">
-          <div class="mini-head">
-            <div class="mini-title">Onboarding sprint</div>
-            <span class="pill">2–4 weeks</span>
-          </div>
-          <div class="mini-text">
-            Bring a dataset online: ingestion, standards, QA, and handoff. Suited to new
-            populations, new sensors, or new partnerships.
-          </div>
-          <ul class="mini-list">
-            <li>Ingest and normalise metadata</li>
-            <li>QA report and known limits</li>
-            <li>Reproducible pipeline and docs</li>
-          </ul>
-        </div>
-
-        <div class="mini">
-          <div class="mini-head">
-            <div class="mini-title">Model readiness</div>
-            <span class="pill">1–2 weeks</span>
-          </div>
-          <div class="mini-text">
-            A clear answer to "is this model working?" and "what do we do next?" without committing
-            to months of training.
-          </div>
-          <ul class="mini-list">
-            <li>Evaluation protocol and metrics</li>
-            <li>Error analysis and failure modes</li>
-            <li>Data strategy and next steps</li>
-          </ul>
+        <div style="display: grid; gap: 20px; font-size: 17.5px; line-height: 1.7; color: #4d6478;">
+          <p style="margin: 0;">Conservation research generates more imagery, audio, and field data every year than the people doing the work can process. Field seasons keep producing; the archive keeps growing; the questions that motivated the collection wait their turn.</p>
+          <p style="margin: 0;">Operational Ecology builds production-grade machine-learning systems that close that gap. The biologists and technicians whose careers are devoted to these populations are the experts; our role is to amplify that work, without replacing or overshadowing it.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="rule"></div>
-      <div class="section-sub" style="text-align:center;">
-        Longer engagements are available for teams ready to operationalise end-to-end workflows —
-        data pipelines, reproducibility, monitoring, and deployment hygiene.
+  <section id="projects" style="max-width: 1180px; margin: 0 auto; padding: 88px 32px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 44px;">
+      <div>
+        <div style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #1d6f8b; font-weight: 700;">Where the work happens</div>
+        <h2 style="font-family: Archivo, system-ui, sans-serif; font-size: 34px; line-height: 1.15; font-weight: 600; letter-spacing: -0.02em; color: #0b2540; margin: 12px 0 0;">Software in daily use, and research into how orca speak.</h2>
       </div>
-    </section>
+      <a href="https://github.com/Operational-Ecology" target="_blank" rel="noopener" style="font-family: Archivo, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1d6f8b; text-decoration: none; border-bottom: 1px solid rgba(29,111,139,0.4); padding-bottom: 2px;">Everything else on GitHub →</a>
+    </div>
 
-    <!-- How we work -->
-    <section class="section" id="how" aria-label="How we work">
-      <div class="section-head">
-        <div class="eyebrow">How we work</div>
-        <div class="section-title">Trust earned by being right.</div>
-        <div class="section-sub">
-          Calibrated, honest about limits, durable. The same commitments carry through every
-          project we ship.
+    <div style="display: grid; gap: 24px;">
+      <article style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: #ffffff; border: 1px solid rgba(11,37,64,0.10); border-radius: 8px; overflow: hidden;">
+        <div style="position: relative; min-height: 340px;">
+          <img src="images/proj-finwave.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
         </div>
-      </div>
+        <div style="padding: 44px; display: grid; gap: 20px; align-content: center;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <h3 style="font-family: Archivo, system-ui, sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; color: #0b2540; margin: 0;">finwave</h3>
+            <span style="padding: 4px 10px; border-radius: 4px; background: rgba(29,111,139,0.10); color: #1d6f8b; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">In production</span>
+          </div>
+          <p style="margin: 0; font-size: 17.5px; line-height: 1.65; color: #4d6478;">Population-scale photo-identification workflows used by working biologists today. Individuals are recognised from dorsal-fin patterns and markings, with expert review in the loop and the model's confidence visible at every step.</p>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 20px; font-size: 15px;">
+            <dt style="font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #4d6478; font-weight: 700; padding-top: 3px;">Role</dt>
+            <dd style="margin: 0; color: #12283d;">Architected and maintained by Operational Ecology</dd>
+            <dt style="font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #4d6478; font-weight: 700; padding-top: 3px;">Scale</dt>
+            <dd style="margin: 0; color: #12283d;">1M+ images, used by international research groups</dd>
+          </dl>
+          <a href="https://finwave.io" target="_blank" rel="noopener" style="justify-self: start; display: inline-flex; align-items: center; gap: 8px; font-family: Archivo, system-ui, sans-serif; font-size: 14.5px; font-weight: 600; color: #0b2540; text-decoration: none; border-bottom: 1px solid rgba(11,37,64,0.3); padding-bottom: 2px;">finwave.io <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
 
-      <div class="grid-3">
-        <div class="mini">
-          <div class="mini-title">Honest evaluation by default</div>
-          <div class="mini-text">
-            Where ground truth is incomplete, we say so. Models that don't know they're uncertain
-            don't ship; calibration, intervals, abstention, and per-sample diagnostics live in every
-            result.
+      <article style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: #ffffff; border: 1px solid rgba(11,37,64,0.10); border-radius: 8px; overflow: hidden;">
+        <div style="padding: 44px; display: grid; gap: 20px; align-content: center;">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <h3 style="font-family: Archivo, system-ui, sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; color: #0b2540; margin: 0;">Project Fathom</h3>
+            <span style="padding: 4px 10px; border-radius: 4px; background: rgba(154,123,58,0.12); color: #9a7b3a; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">Research · Principal investigator</span>
           </div>
+          <p style="margin: 0; font-size: 17.5px; line-height: 1.65; color: #4d6478;">Four generations of Northern Resident orca have been recorded at OrcaLab since the 1970s: tens of thousands of hours of continuous sound and context that no human ear can revisit across years. Project Fathom asks what is in it: how vocal exchanges are structured, what varies with family and season, and what the whales attend to.</p>
+          <p style="margin: 0; font-size: 17.5px; line-height: 1.65; color: #4d6478;">The work is a collaboration with researchers carrying over 130 years of combined orca experience, and it is valuable for what it finds out, not for anything it ships.</p>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 20px; font-size: 15px;">
+            <dt style="font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #4d6478; font-weight: 700; padding-top: 3px;">Role</dt>
+            <dd style="margin: 0; color: #12283d;">Principal investigator</dd>
+            <dt style="font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #4d6478; font-weight: 700; padding-top: 3px;">Host</dt>
+            <dd style="margin: 0; color: #12283d;">Raincoast Research Society</dd>
+          </dl>
+          <a href="https://raincoastresearch.org/project-fathom/" target="_blank" rel="noopener" style="justify-self: start; display: inline-flex; align-items: center; gap: 8px; font-family: Archivo, system-ui, sans-serif; font-size: 14.5px; font-weight: 600; color: #0b2540; text-decoration: none; border-bottom: 1px solid rgba(11,37,64,0.3); padding-bottom: 2px;">Project overview <span aria-hidden="true">→</span></a>
         </div>
-        <div class="mini">
-          <div class="mini-title">Semi-automated, not autonomous</div>
-          <div class="mini-text">
-            The default stance is triage and amplification of expert review, not autonomous
-            replacement — unless and until evidence justifies otherwise.
-          </div>
+        <div style="position: relative; min-height: 340px;">
+          <img src="images/proj-fathom.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
         </div>
-        <div class="mini">
-          <div class="mini-title">Reproducible by construction</div>
-          <div class="mini-text">
-            Frozen SHAs, versioned datasets, run manifests, committed dependency locks. A reported
-            number is always traceable to the exact code and data that produced it.
-          </div>
-        </div>
-      </div>
-    </section>
+      </article>
+    </div>
+  </section>
 
-    <!-- Trust & safety / Operational hygiene -->
-    <section class="section" id="trust" aria-label="Trust and safety">
-      <div class="section-head">
-        <div class="eyebrow">Trust &amp; safety</div>
-        <div class="section-title">Operational hygiene partners and funders can verify.</div>
-      </div>
-
-      <div class="grid-2">
-        <div class="mini">
-          <div class="mini-title">Data handling</div>
-          <div class="mini-text">
-            We work inside your existing accounts and permissions with least-privilege access —
-            data does not leave the systems it already lives in.
-          </div>
-          <ul class="mini-list">
-            <li>NDA-friendly</li>
-            <li>No data export without explicit approval</li>
-            <li>Audit trails where the substrate supports them</li>
-          </ul>
+  <section style="background: #ffffff; border-top: 1px solid rgba(11,37,64,0.08); border-bottom: 1px solid rgba(11,37,64,0.08);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 88px 32px;">
+      <div style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #1d6f8b; font-weight: 700;">How we work</div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; margin-top: 36px;">
+        <div style="display: grid; gap: 16px; align-content: start;">
+          <h3 style="font-family: Archivo, system-ui, sans-serif; font-size: clamp(26px, 2.8vw, 34px); line-height: 1.16; font-weight: 600; letter-spacing: -0.02em; color: #0b2540; margin: 0; text-wrap: pretty;">We work with your data as it is.</h3>
+          <p style="font-size: 18px; line-height: 1.7; color: #4d6478; margin: 0;">Decades of folders, inconsistent naming, spreadsheets that only one person fully understands. There is no cleanup you need to finish first, and nothing has to move anywhere new to get started.</p>
         </div>
-
-        <div class="mini">
-          <div class="mini-title">Operational handoff</div>
-          <div class="mini-text">
-            Every engagement ends with written documentation and a clear operating procedure your
-            team can run after we leave.
-          </div>
-          <ul class="mini-list">
-            <li>Runbooks and checklists</li>
-            <li>Monitoring and alerting recommendations</li>
-            <li>Reproducibility guardrails</li>
-          </ul>
+        <div style="display: grid; gap: 16px; align-content: start;">
+          <h3 style="font-family: Archivo, system-ui, sans-serif; font-size: clamp(26px, 2.8vw, 34px); line-height: 1.16; font-weight: 600; letter-spacing: -0.02em; color: #0b2540; margin: 0; text-wrap: pretty;">Every engagement ends with a handoff.</h3>
+          <p style="font-size: 18px; line-height: 1.7; color: #4d6478; margin: 0;">Runbooks, checklists, monitoring recommendations, and a written operating procedure your team can run after we leave.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- About + Approach + Start -->
-    <section class="section" id="about" aria-label="About and details">
-      <div class="section-head">
-        <div class="eyebrow">About</div>
-        <div class="section-title">Pragmatic, field-aware engineering.</div>
+  <section style="background: #0b2540; color: #e7edf0;">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 80px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px;">
+      <div>
+        <h2 style="font-family: Archivo, system-ui, sans-serif; font-size: 34px; line-height: 1.15; font-weight: 600; letter-spacing: -0.02em; color: #ffffff; margin: 0; max-width: 24ch; text-wrap: pretty;">Tell us what is piling up.</h2>
+        <p style="font-size: 17px; line-height: 1.6; color: rgba(231,237,240,0.78); margin: 14px 0 0; max-width: 48ch;">A short email is enough to start. We will tell you honestly whether we are the right people for it.</p>
       </div>
+      <a href="mailto:alex@operationalecology.io" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; font-family: Archivo, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; border-radius: 6px; background: #ffffff; color: #0b2540; text-decoration: none; white-space: nowrap;">alex@operationalecology.io <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
 
-      <div class="stack-2">
-        <div class="card">
-          <div class="callout">
-            Operational Ecology is a small product organisation focused on environmental data
-            systems and machine learning. We build "boring" infrastructure on purpose: workflows
-            that are <strong>safe</strong>, <strong>auditable</strong>, and
-            <strong>maintainable</strong>, with clear documentation and handoff.
-            <br/><br/>
-            The work is led by an applied machine-learning engineer and researcher in
-            conservation-focused computer vision and ecological data pipelines — experienced with
-            long-term datasets, photo-identification workflows, and operational systems that must
-            survive beyond a single grant cycle.
-            <br/><br/>
-            Lineage:
-            <a href="https://www.nature.com/articles/s41598-021-02506-6" target="_blank" rel="noopener">FIN-PRINT</a>
-            (individual killer-whale recognition),
-            <a href="https://finwave.io" target="_blank" rel="noopener">finwave.io</a>
-            (population-scale photo-ID workflows used by working biologists today), and the FinScar
-            publication (Barnhill et al., <em>Marine Mammal Science</em>, 2025).
-          </div>
-        </div>
-
-        <div>
-          <div class="card" id="approach" style="margin-bottom: 14px;">
-            <div class="section-head" style="margin-bottom: 14px; text-align: left;">
-              <div class="eyebrow">Approach</div>
-              <div class="section-title" style="font-size: 18px;">Trust by design.</div>
-            </div>
-            <ul class="detail-list">
-              <li>
-                <div class="detail-label">Confidence</div>
-                <div class="detail-value">Define metrics, measure outcomes, make reliability visible.</div>
-              </li>
-              <li>
-                <div class="detail-label">Safety</div>
-                <div class="detail-value">Least-privilege access, careful data handling, audit trails.</div>
-              </li>
-              <li>
-                <div class="detail-label">Knowledge</div>
-                <div class="detail-value">Documentation, runbooks, and training so your team can operate independently.</div>
-              </li>
-            </ul>
-          </div>
-
-          <div class="card" id="start">
-            <div class="section-head" style="margin-bottom: 14px; text-align: left;">
-              <div class="eyebrow">Start</div>
-              <div class="section-title" style="font-size: 18px;">Two-week rescue audit.</div>
-            </div>
-            <ul class="detail-list">
-              <li>
-                <div class="detail-label">You get</div>
-                <div class="detail-value">A current-state map, a prioritised 30 / 60 / 90 plan, and a funder-ready summary.</div>
-              </li>
-              <li>
-                <div class="detail-label">Best for</div>
-                <div class="detail-value">Teams with growing datasets, manual workflows, or stalled ML initiatives.</div>
-              </li>
-              <li>
-                <div class="detail-label">How it starts</div>
-                <div class="detail-value">A short call → access to existing docs and systems → a clear, written output.</div>
-              </li>
-            </ul>
-            <div class="rule"></div>
-            <a class="btn btn-primary" style="width: 100%; justify-content: center;"
-               href="#contact">
-              Ask about the rescue audit <span aria-hidden="true">→</span>
-            </a>
-            <div class="section-sub" style="margin-top: 10px; text-align: center;">
-              Nonprofit-friendly scope and pricing. Fixed-fee deposit / milestone terms available on request.
-            </div>
-          </div>
-        </div>
+  <footer>
+    <div style="max-width: 1180px; margin: 0 auto; padding: 30px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; font-size: 13.5px; color: #4d6478;">
+      <span>© 2026 Operational Ecology</span>
+      <div style="display: flex; gap: 24px;">
+        <a href="#projects" style="color: inherit; text-decoration: none;">Projects</a>
+        <a href="about.html" style="color: inherit; text-decoration: none;">About</a>
+        <a href="contact.html" style="color: inherit; text-decoration: none;">Contact</a>
+        <a href="https://github.com/Operational-Ecology" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">GitHub</a>
       </div>
-    </section>
+    </div>
+  </footer>
 
-    <footer class="footer" id="contact">
-      <span>© <span id="year"></span> Operational Ecology</span>
-      <span>alex [at] operationalecology [dot] io</span>
-    </footer>
-  </main>
+</div>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    (function () {
-      const topbar = document.getElementById("topbar");
-      const btn = topbar?.querySelector(".nav-toggle");
-      const nav = document.getElementById("site-nav");
-      if (!topbar || !btn || !nav) return;
-
-      const setOpen = (open) => {
-        topbar.classList.toggle("is-open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      };
-
-      btn.addEventListener("click", () => setOpen(!topbar.classList.contains("is-open")));
-      nav.querySelectorAll('a[href^="#"]').forEach((a) =>
-        a.addEventListener("click", () => setOpen(false))
-      );
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") setOpen(false);
-      });
-    })();
-  </script>
 </body>
 </html>
